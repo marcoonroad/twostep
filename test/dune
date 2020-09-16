@@ -1,0 +1,3 @@
+(test
+ (name spec)
+ (libraries base core alcotest nocrypto digestif twostep))

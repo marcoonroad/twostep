@@ -1,0 +1,34 @@
+opam-version: "2.0"
+name: "twostep"
+version: "1.0.0"
+synopsis: "HOTP and TOTP algorithms for 2-step verification (for OCaml)"
+description: """
+This project implements algorithms for 2-step verification, being the
+HMAC-based One-Time Password (RFC4226) and the Time-based One-Time Password
+(RFC 6238).
+"""
+license: "MIT"
+maintainer: "marcoonroad@gmail.com"
+authors: ["Marco Aurélio da Silva"]
+homepage: "https://github.com/marcoonroad/twostep"
+bug-reports: "https://github.com/marcoonroad/twostep/issues"
+dev-repo: "https://github.com/marcoonroad/twostep.git"
+
+build: [
+  ["dune" "build" "-p" name "-j" jobs]
+]
+
+run-test: ["dune" "runtest" "-p" name "-j" jobs]
+
+depends: [
+  "ocaml" {>= "4.08.0"}
+  "core" {>= "v0.12.3"}
+  "base" {>= "v0.12.2"}
+  "hex" {>= "1.4.0"}
+  "digestif" {>= "0.8.0"}
+  "nocrypto" {>= "0.5.4-2"}
+  "dune" {build & >= "2.0.1"}
+  "cmdliner" {>= "1.0.3"}
+  "bisect_ppx" {>= "2.1.0"}
+  "alcotest" {with-test & >= "0.8.5"}
+]
