@@ -28,9 +28,11 @@ with:
 let secret: string = Twostep.secret();;
 ```
 
-To generate such OTP code, for testing purposes mostly ('cause
-this one-time code should be generated on client-side), you can
-use this function:
+As an additional note, the `Twostep.secret` function above uses
+a cryptographically safe PRNG, that is, a secure source of pseudo
+randomness. To generate the OTP code, for testing purposes mostly
+('cause this one-time code should be generated on client-side -- unless
+you use this library on the client's device), you can use this function:
 
 ```ocaml
 let code: string = Twostep.code ~secret:secret ();;

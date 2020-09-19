@@ -6,6 +6,9 @@ let __nullchar = Char.of_int_exn 0
 
 type padding = OnLeft | OnRight
 
+let padOnLeft = OnLeft
+let padOnRight = OnRight
+
 let pad ~basis ?(direction=OnRight) ?(byte=__nullchar) msg =
   let length = String.length msg in
   let remainder = length mod basis in
@@ -18,4 +21,3 @@ let pad ~basis ?(direction=OnRight) ?(byte=__nullchar) msg =
 let __nonzero char = char != __nullchar
 
 let unpad msg = String.filter ~f:__nonzero msg
-
