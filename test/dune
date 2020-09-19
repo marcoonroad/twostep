@@ -1,3 +1,9 @@
 (test
  (name rfc6238_errata_samples)
+ (modules rfc6238_errata_samples)
  (libraries base core hex twostep))
+
+(test
+ (name rfc4226_samples)
+ (modules rfc4226_samples)
+ (libraries base core twostep))
