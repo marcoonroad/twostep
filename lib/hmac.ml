@@ -1,15 +1,18 @@
-module S1 = Digestif.SHA1
-module S2 = Digestif.SHA256
-module S5 = Digestif.SHA512
+module S1 = Nocrypto.Hash.SHA1
+module S2 = Nocrypto.Hash.SHA256
+module S5 = Nocrypto.Hash.SHA512
+
+let of_string = Cstruct.of_string
+let to_string = Cstruct.to_string
 
 let hmac_sha1 ~secret payload =
-  S1.to_raw_string @@ S1.hmac_string ~key:secret payload
+  to_string @@ S1.hmac ~key:(of_string secret) @@ of_string payload
 
 let hmac_sha256 ~secret payload =
-  S2.to_raw_string @@ S2.hmac_string ~key:secret payload
+  to_string @@ S2.hmac ~key:(of_string secret) @@ of_string payload
 
 let hmac_sha512 ~secret payload =
-  S5.to_raw_string @@ S5.hmac_string ~key:secret payload
+  to_string @@ S5.hmac ~key:(of_string secret) @@ of_string payload
 
 let no_trace char = char != '-'
 
@@ -26,4 +29,3 @@ let hmac ~hash =
   | "sha256" -> hmac_sha256
   | "sha512" -> hmac_sha512
   | _        -> failwith ("Invalid hash algorithm: " ^ hash)
-
