@@ -51,22 +51,46 @@
 <a id="L29"></a><span class="visited"> </span>
 <a id="L30"></a><span > </span>
 <a id="L31"></a><span > </span>
-<a id="L32"></a><span class="visited"> </span>
+<a id="L32"></a><span > </span>
 <a id="L33"></a><span > </span>
-<a id="L34"></a><span class="visited"> </span>
+<a id="L34"></a><span > </span>
 <a id="L35"></a><span > </span>
-<a id="L36"></a><span class="visited"> </span>
+<a id="L36"></a><span > </span>
 <a id="L37"></a><span > </span>
-<a id="L38"></a><span class="visited"> </span>
-<a id="L39"></a><span class="visited"> </span>
-<a id="L40"></a><span class="visited"> </span>
+<a id="L38"></a><span > </span>
+<a id="L39"></a><span > </span>
+<a id="L40"></a><span > </span>
 <a id="L41"></a><span > </span>
 <a id="L42"></a><span > </span>
 <a id="L43"></a><span > </span>
-<a id="L44"></a><span class="visited"> </span>
-<a id="L45"></a><span class="visited"> </span>
-<a id="L46"></a><span class="visited"> </span>
-<a id="L47"></a><span class="visited"> </span>
+<a id="L44"></a><span > </span>
+<a id="L45"></a><span > </span>
+<a id="L46"></a><span > </span>
+<a id="L47"></a><span > </span>
+<a id="L48"></a><span > </span>
+<a id="L49"></a><span > </span>
+<a id="L50"></a><span > </span>
+<a id="L51"></a><span > </span>
+<a id="L52"></a><span > </span>
+<a id="L53"></a><span > </span>
+<a id="L54"></a><span > </span>
+<a id="L55"></a><span class="visited"> </span>
+<a id="L56"></a><span > </span>
+<a id="L57"></a><span > </span>
+<a id="L58"></a><span class="visited"> </span>
+<a id="L59"></a><span class="visited"> </span>
+<a id="L60"></a><span > </span>
+<a id="L61"></a><span class="visited"> </span>
+<a id="L62"></a><span class="visited"> </span>
+<a id="L63"></a><span class="visited"> </span>
+<a id="L64"></a><span > </span>
+<a id="L65"></a><span > </span>
+<a id="L66"></a><span > </span>
+<a id="L67"></a><span class="visited"> </span>
+<a id="L68"></a><span class="visited"> </span>
+<a id="L69"></a><span class="visited"> </span>
+<a id="L70"></a><span class="visited"> </span>
+<a id="L71"></a><span > </span>
 </pre>
       </div>
       <div id="text-layer">
@@ -118,6 +142,30 @@
 <a href="#L45">45</a>
 <a href="#L46">46</a>
 <a href="#L47">47</a>
+<a href="#L48">48</a>
+<a href="#L49">49</a>
+<a href="#L50">50</a>
+<a href="#L51">51</a>
+<a href="#L52">52</a>
+<a href="#L53">53</a>
+<a href="#L54">54</a>
+<a href="#L55">55</a>
+<a href="#L56">56</a>
+<a href="#L57">57</a>
+<a href="#L58">58</a>
+<a href="#L59">59</a>
+<a href="#L60">60</a>
+<a href="#L61">61</a>
+<a href="#L62">62</a>
+<a href="#L63">63</a>
+<a href="#L64">64</a>
+<a href="#L65">65</a>
+<a href="#L66">66</a>
+<a href="#L67">67</a>
+<a href="#L68">68</a>
+<a href="#L69">69</a>
+<a href="#L70">70</a>
+<a href="#L71">71</a>
 </pre>
 <pre><code class="ocaml">module Internals = struct
   let counter = Time.counter
@@ -150,22 +198,46 @@
     @@ Base.Int.to_strin<span data-count="66">g</span> num
 end
 
-let secret () = <span data-count="5">S</span>ecret.generate ()
+module type ITOTP = sig
+  val secret : unit -&gt; string
 
-let code ?(window = <span data-count="14">3</span>0) ?(drift = <span data-count="7">0</span>) ?(digits = <span data-count="10">6</span>) ?(hash = <span data-count="14">"</span>SHA-1") ~secret ()
-    =
-  <span data-count="38">a</span>ssert (digits = <span data-count="36">6</span> || digits = <span data-count="2">8</span>) ;
-  let decoded = Base32.base32_to_string secret in
-  <span data-count="38">l</span>et counter = Time.counter ~timestep:window ~drift () in
-  <span data-count="38">l</span>et image = Hmac.hmac ~hash ~secret:decoded counter in
-  <span data-count="38">I</span>nternals.truncate ~image ~digits
+  val code :
+       ?window:int
+    -&gt; ?drift:int
+    -&gt; ?digits:int
+    -&gt; ?hash:string
+    -&gt; secret:string
+    -&gt; unit
+    -&gt; string
+
+  val verify :
+       ?window:int
+    -&gt; ?digits:int
+    -&gt; ?hash:string
+    -&gt; secret:string
+    -&gt; code:string
+    -&gt; unit
+    -&gt; bool
+end
+
+module TOTP : ITOTP = struct
+  let secret () = <span data-count="5">S</span>ecret.generate ()
+
+  let code
+      ?(window = <span data-count="14">3</span>0) ?(drift = <span data-count="7">0</span>) ?(digits = <span data-count="10">6</span>) ?(hash = <span data-count="14">"</span>SHA-1") ~secret () =
+    <span data-count="38">a</span>ssert (digits = <span data-count="36">6</span> || digits = <span data-count="2">8</span>) ;
+    let decoded = Base32.base32_to_string secret in
+    <span data-count="38">l</span>et counter = Time.counter ~timestep:window ~drift () in
+    <span data-count="38">l</span>et image = Hmac.hmac ~hash ~secret:decoded counter in
+    <span data-count="38">I</span>nternals.truncate ~image ~digits
 
 
-let verify
-    ?(window = <span data-count="9">3</span>0) ?(digits = <span data-count="9">6</span>) ?(hash = <span data-count="9">"</span>SHA-1") ~secret ~code:number () =
-  number = cod<span data-count="9">e</span> ~secret ~window ~digits ~hash ~drift:(-1) (<span data-count="1">)</span>
-  || number = cod<span data-count="8">e</span> ~secret ~window ~digits ~hash ~drift:0 (<span data-count="1">)</span>
-  || number = cod<span data-count="7">e</span> ~secret ~window ~digits ~hash ~drift:1 (<span data-count="1">)</span>
+  let verify
+      ?(window = <span data-count="9">3</span>0) ?(digits = <span data-count="9">6</span>) ?(hash = <span data-count="9">"</span>SHA-1") ~secret ~code:number () =
+    number = cod<span data-count="9">e</span> ~secret ~window ~digits ~hash ~drift:(-1) (<span data-count="1">)</span>
+    || number = cod<span data-count="8">e</span> ~secret ~window ~digits ~hash ~drift:0 (<span data-count="1">)</span>
+    || number = cod<span data-count="7">e</span> ~secret ~window ~digits ~hash ~drift:1 (<span data-count="1">)</span>
+end
 </code></pre>
       </div>
     </div>

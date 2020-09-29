@@ -13,12 +13,10 @@
           <span class="dirname">lib/</span>helpers.ml
         </a>
       </h1>
-      <h2>75.00%</h2>
+      <h2>90.00%</h2>
     </div>
     <div id="navbar">
-      <span class="some-visited" style="bottom:44.44%"></span>
-      <span class="unvisited" style="bottom:7.41%"></span>
-      <span class="unvisited" style="bottom:0.00%"></span>
+      <span class="some-visited" style="bottom:31.82%"></span>
     </div>
     <div id="report">
       <div id="lines-layer">
@@ -45,11 +43,6 @@
 <a id="L20"></a><span > </span>
 <a id="L21"></a><span class="visited"> </span>
 <a id="L22"></a><span class="visited"> </span>
-<a id="L23"></a><span > </span>
-<a id="L24"></a><span > </span>
-<a id="L25"></a><span class="unvisited"> </span>
-<a id="L26"></a><span > </span>
-<a id="L27"></a><span class="unvisited"> </span>
 </pre>
       </div>
       <div id="text-layer">
@@ -76,11 +69,6 @@
 <a href="#L20">20</a>
 <a href="#L21">21</a>
 <a href="#L22">22</a>
-<a href="#L23">23</a>
-<a href="#L24">24</a>
-<a href="#L25">25</a>
-<a href="#L26">26</a>
-<a href="#L27">27</a>
 </pre>
 <pre><code class="ocaml">module Int = Base.Int
 module String = Base.String
@@ -100,15 +88,10 @@ let pad ~basis ?(direction = <span data-count="0">O</span>nRight) ?(byte = <span
   <span data-count="745">l</span>et length = String.length msg in
   <span data-count="745">l</span>et remainder = length mod basis in
   if remainder = 0
-  then <span data-count="432">m</span>sg
+  then <span data-count="408">m</span>sg
   else
-    <span data-count="313">l</span>et zerofill = String.make (basis - remainder) byte in
-    <span data-count="313">m</span>atch direction with <span data-count="5">O</span>nRight -&gt; msg ^ zerofill | <span data-count="308">O</span>nLeft -&gt; zerofill ^ msg
-
-
-let __nonzero char = <span data-count="0">c</span>har != __nullchar
-
-let unpad msg = <span data-count="0">S</span>tring.filter ~f:__nonzero msg
+    <span data-count="337">l</span>et zerofill = String.make (basis - remainder) byte in
+    <span data-count="337">m</span>atch direction with <span data-count="5">O</span>nRight -&gt; msg ^ zerofill | <span data-count="332">O</span>nLeft -&gt; zerofill ^ msg
 </code></pre>
       </div>
     </div>

@@ -15,10 +15,6 @@ let __random_bits bits =
   NumZ.to_cstruct_be @@ RngZ.gen_r _min_random _max_random
 
 
-let max_bits bits = NumZ.to_cstruct_be @@ __max_bits bits
-
-let min_bits bits = NumZ.to_cstruct_be @@ __min_bits bits
-
 let generate () =
   Base32.string_to_base32 @@ Cstruct.to_string @@ __random_bits 80
 

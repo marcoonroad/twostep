@@ -29,19 +29,43 @@ module Internals = struct
     @@ Base.Int.to_string num
 end
 
-let secret () = Secret.generate ()
+module type ITOTP = sig
+  val secret : unit -> string
 
-let code ?(window = 30) ?(drift = 0) ?(digits = 6) ?(hash = "SHA-1") ~secret ()
-    =
-  assert (digits = 6 || digits = 8) ;
-  let decoded = Base32.base32_to_string secret in
-  let counter = Time.counter ~timestep:window ~drift () in
-  let image = Hmac.hmac ~hash ~secret:decoded counter in
-  Internals.truncate ~image ~digits
+  val code :
+       ?window:int
+    -> ?drift:int
+    -> ?digits:int
+    -> ?hash:string
+    -> secret:string
+    -> unit
+    -> string
+
+  val verify :
+       ?window:int
+    -> ?digits:int
+    -> ?hash:string
+    -> secret:string
+    -> code:string
+    -> unit
+    -> bool
+end
+
+module TOTP : ITOTP = struct
+  let secret () = Secret.generate ()
+
+  let code
+      ?(window = 30) ?(drift = 0) ?(digits = 6) ?(hash = "SHA-1") ~secret () =
+    assert (digits = 6 || digits = 8) ;
+    let decoded = Base32.base32_to_string secret in
+    let counter = Time.counter ~timestep:window ~drift () in
+    let image = Hmac.hmac ~hash ~secret:decoded counter in
+    Internals.truncate ~image ~digits
 
 
-let verify
-    ?(window = 30) ?(digits = 6) ?(hash = "SHA-1") ~secret ~code:number () =
-  number = code ~secret ~window ~digits ~hash ~drift:(-1) ()
-  || number = code ~secret ~window ~digits ~hash ~drift:0 ()
-  || number = code ~secret ~window ~digits ~hash ~drift:1 ()
+  let verify
+      ?(window = 30) ?(digits = 6) ?(hash = "SHA-1") ~secret ~code:number () =
+    number = code ~secret ~window ~digits ~hash ~drift:(-1) ()
+    || number = code ~secret ~window ~digits ~hash ~drift:0 ()
+    || number = code ~secret ~window ~digits ~hash ~drift:1 ()
+end

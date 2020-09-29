@@ -20,8 +20,3 @@ let pad ~basis ?(direction = OnRight) ?(byte = __nullchar) msg =
   else
     let zerofill = String.make (basis - remainder) byte in
     match direction with OnRight -> msg ^ zerofill | OnLeft -> zerofill ^ msg
-
-
-let __nonzero char = char != __nullchar
-
-let unpad msg = String.filter ~f:__nonzero msg

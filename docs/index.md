@@ -27,7 +27,7 @@ secret was send before, you can generate this Base32 secret
 with:
 
 ```ocaml
-let secret: string = Twostep.secret();; (* kinda "A222 BBBB 3333 D5D5" *)
+let secret: string = Twostep.TOTP.secret();; (* kinda "A222 BBBB 3333 D5D5" *)
 ```
 
 As an additional note, the `Twostep.secret` function above uses
@@ -37,7 +37,7 @@ randomness. To generate the OTP code, for testing purposes mostly
 you use this library on the client's device), you can use this function:
 
 ```ocaml
-let code: string = Twostep.code ~secret:secret ();; (* kinda "098123" *)
+let code: string = Twostep.TOTP.code ~secret:secret ();; (* kinda "098123" *)
 ```
 
 The function above assumes the `SHA-1` hash algorithm, 30 seconds
@@ -50,13 +50,14 @@ To verify one-time codes sent from client-side, use the following
 function:
 
 ```ocaml
-let valid: bool = Twostep.verify ~secret:secret ~code:code ();;
+let valid: bool = Twostep.TOTP.verify ~secret:secret ~code:code ();;
 ```
 
 This function assumes the same configuration of `Twostep.code`,
 except for the clock drift, where `Twostep.verify` assumes too
 past and future 30 seconds (ideal on slow connections or latency
-problems).
+problems). For the full API reference, please refer to:
+- [Auto-generated API docs](https://www.marcoonroad.dev/twostep/apiref/twostep/index.html)
 
 You can test this library against mobile apps such as Google
 Authenticator or Microsoft Authenticator without no problems
