@@ -2,6 +2,11 @@
  (dev
   (flags
    (:standard -w +42)))
+ (deploy
+  (ocamlopt_flags
+   (:standard -O3 -verbose -ccopt -static)))
  (release
   (flags
    (:standard -O3))))
+
+(ignored_subdirs (docs))

@@ -1,4 +1,4 @@
-.PHONY: clean dev-deps deps lint-format format docs uninstall
+.PHONY: clean dev-deps deps lint-format lint format docs uninstall
 
 all: build
 
@@ -37,15 +37,19 @@ clean: cleanup-files
 lint-format:
 	@ dune build @fmt
 
+lint:
+	@ opam lint
+	@ make lint-format
+
 format:
 	@ dune build @fmt --auto-promote || echo "\nSource code rewritten by format.\n"
 
 quick-test: build
-	@ opam lint
+	@ make lint
 	@ ALCOTEST_QUICK_TESTS=1 dune runtest
 
 test: build
-	@ opam lint
+	@ make lint
 	@ dune runtest --no-buffer -f -j 1
 
 docs-index:
@@ -82,3 +86,11 @@ coverage: clean
 		-text - \
 		`find . -name 'bisect*.out'`
 	@ mv ./coverage/* ./docs/apicov/
+
+.PHONY: local-site-setup
+local-site-setup:
+	@ cd docs && bundle install --path vendor/bundle && cd ..
+
+.PHONY: local-site-start
+local-site-start:
+	@ cd docs && bundle exec jekyll serve && cd ..
