@@ -19,10 +19,10 @@ let no_trace char = char != '-'
 let hmac ~hash =
   let algorithm =
     hash
-    |> Core.String.lowercase
-    |> Core.String.to_list
-    |> Core.List.filter ~f:no_trace
-    |> Core.String.of_char_list
+    |> Base.String.lowercase
+    |> Base.String.to_list
+    |> Base.List.filter ~f:no_trace
+    |> Base.String.of_char_list
   in
   match algorithm with
   | "sha1"   -> hmac_sha1

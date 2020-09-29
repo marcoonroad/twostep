@@ -1,3 +1,9 @@
+.PHONY: clean dev-deps deps lint-format format docs uninstall
+
+all: build
+
+clear: clean
+
 build:
 	@ dune build
 
@@ -13,24 +19,30 @@ pin:
 utop: build
 	@ dune utop lib
 
-cleanup:
-	@ rm -fv *~
-	@ rm -fv lib/*~
-	@ rm -fv test/*~
-	@ rm -fv .*.un~
-	@ rm -fv lib/.*.un~
-	@ rm -fv test/.*.un~
+cleanup-files:
+	@ rm -f *~
+	@ rm -f bin/*~
+	@ rm -f lib/*~
+	@ rm -f test/*~
+	@ rm -f .*.un~
+	@ rm -f bin/.*.un~
+	@ rm -f lib/.*.un~
+	@ rm -f test/.*.un~
 	@ rm -f `find . -name 'bisect*.out'`
+	@ rm -f `find . -name 'bisect*.coverage'`
 
-.PHONY: clean
-clean: cleanup
+clean: cleanup-files
 	@ dune clean
 
-lint-format: build
+lint-format:
 	@ dune build @fmt
 
 format:
 	@ dune build @fmt --auto-promote || echo "\nSource code rewritten by format.\n"
+
+quick-test: build
+	@ opam lint
+	@ ALCOTEST_QUICK_TESTS=1 dune runtest
 
 test: build
 	@ opam lint
@@ -40,12 +52,12 @@ docs-index:
 	@ cp README.md docs/index.md
 
 docs: build
-	@ mkdir -p docs
-	@ rm -rf docs/apiref
-	@ mkdir -p docs/apiref
+	@ mkdir -p docs/
+	@ rm -rf docs/apiref/
+	@ mkdir -p docs/apiref/
 	@ dune build @doc
 	@ make docs-index
-	@ mv _build/default/_doc/_html/* docs/apiref/
+	@ mv ./_build/default/_doc/_html/* ./docs/apiref/
 
 install: build
 	@ dune install
@@ -55,8 +67,8 @@ uninstall:
 
 coverage: clean
 	@ mkdir -p docs/
-	@ rm -rf docs/apicov
-	@ mkdir -p docs/apicov
+	@ rm -rf docs/apicov/
+	@ mkdir -p docs/apicov/
 	@ BISECT_ENABLE=yes make build
 	@ BISECT_ENABLE=yes make test
 	@ bisect-ppx-report \
@@ -69,4 +81,4 @@ coverage: clean
 		-I _build/default/ \
 		-text - \
 		`find . -name 'bisect*.out'`
-	@ mv ./coverage/* ./docs/apicov
+	@ mv ./coverage/* ./docs/apicov/

@@ -1,6 +1,6 @@
-module Int = Core.Int
-module String = Core.String
-module Char = Core.Char
+module Int = Base.Int
+module String = Base.String
+module Char = Base.Char
 
 let __nullchar = Char.of_int_exn 0
 

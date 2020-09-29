@@ -9,22 +9,22 @@ let sha1_secret = Cstruct.to_string @@ Cstruct.of_hex sha1_hex_secret
 
 let counter_padding =
   counters
-  |> Core.List.reduce_exn ~f:Core.Int64.max
-  |> Core.Int64.to_string
-  |> Core.String.length
+  |> Base.List.reduce_exn ~f:Base.Int64.max
+  |> Base.Int64.to_string
+  |> Base.String.length
 
 let get_secret = function
 | "SHA-1" -> sha1_secret
 | hash    -> failwith ("Unknown hash algorithm: " ^ hash)
 
 let _ =
-  Core.List.iter counters ~f:(function counter -> begin
-    let text_counter = Core.Int64.to_string counter in
+  Base.List.iter counters ~f:(function counter -> begin
+    let text_counter = Base.Int64.to_string counter in
     let padded_counter =
       I.pad ~basis:counter_padding ~byte:' ' ~direction:I.padOnRight text_counter
     in
     let payload_counter = I.counter ~timestep:1 ~timestamp:(function () -> counter) () in
-    Core.List.iter algorithms ~f:(function algorithm -> begin
+    Base.List.iter algorithms ~f:(function algorithm -> begin
       let secret = get_secret algorithm in
       let image = I.hmac ~hash:algorithm ~secret payload_counter in
       let code = I.truncate ~image ~digits:6 in

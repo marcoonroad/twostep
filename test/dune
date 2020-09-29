@@ -1,9 +1,14 @@
 (test
  (name rfc6238_errata_samples)
  (modules rfc6238_errata_samples)
- (libraries base core hex twostep))
+ (libraries base hex twostep))
 
 (test
  (name rfc4226_samples)
  (modules rfc4226_samples)
- (libraries base core twostep))
+ (libraries base twostep))
+
+(test
+ (name api_interface)
+ (modules api_interface)
+ (libraries base twostep alcotest))

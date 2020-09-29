@@ -11,14 +11,14 @@ module Internals = struct
   let padOnRight = Helpers.padOnRight
 
   let truncate ~image ~digits =
-    let bytes = Core.List.map ~f:Core.Char.to_int @@ Core.String.to_list image in
-    let offset = Core.List.nth_exn bytes (Core.List.length bytes - 1) land 0xf in
-    let fst = (Core.List.nth_exn bytes (offset + 0) land 0x7f) lsl 24 in
-    let snd = (Core.List.nth_exn bytes (offset + 1) land 0xff) lsl 16 in
-    let trd = (Core.List.nth_exn bytes (offset + 2) land 0xff) lsl 8  in
-    let fth = (Core.List.nth_exn bytes (offset + 3) land 0xff) lsl 0  in
-    let num = (fst lor snd lor trd lor fth) mod (Core.Int.pow 10 digits) in
-    Helpers.pad ~basis:digits ~byte:'0' ~direction:Helpers.OnLeft @@ Core.Int.to_string num
+    let bytes = Base.List.map ~f:Base.Char.to_int @@ Base.String.to_list image in
+    let offset = Base.List.nth_exn bytes (Base.List.length bytes - 1) land 0xf in
+    let fst = (Base.List.nth_exn bytes (offset + 0) land 0x7f) lsl 24 in
+    let snd = (Base.List.nth_exn bytes (offset + 1) land 0xff) lsl 16 in
+    let trd = (Base.List.nth_exn bytes (offset + 2) land 0xff) lsl 8  in
+    let fth = (Base.List.nth_exn bytes (offset + 3) land 0xff) lsl 0  in
+    let num = (fst lor snd lor trd lor fth) mod (Base.Int.pow 10 digits) in
+    Helpers.pad ~basis:digits ~byte:'0' ~direction:Helpers.OnLeft @@ Base.Int.to_string num
 end
 
 let secret () = Secret.generate()

@@ -11,7 +11,7 @@ let reverse_base32_alphabet = function
   | 'd' -> 3 | 'j' ->  9 | 'p' -> 15 | 'v' -> 21 | '3' -> 27
   | 'e' -> 4 | 'k' -> 10 | 'q' -> 16 | 'w' -> 22 | '4' -> 28
   | 'f' -> 5 | 'l' -> 11 | 'r' -> 17 | 'x' -> 23 | '5' -> 29
-  | wat -> failwith ("Invalid base32 character: " ^ Core.String.of_char wat)
+  | wat -> failwith ("Invalid base32 character: " ^ Base.String.of_char wat)
 
 let rec enc_loop data ~basis ~alphabet number =
   if number <= 0 then data else
@@ -28,20 +28,20 @@ let int_to_base_x ?(basis=32) ?(alphabet=base32_alphabet) number =
 
 let base32_to_string ?(size=10) base32 =
   base32
-  |> Core.String.lowercase
-  |> Core.String.to_list
-  |> Core.List.filter ~f:((!=) ' ')
-  |> Core.List.map ~f:reverse_base32_alphabet
-  |> Core.List.map ~f:(int_to_base_x ~basis:2 ~alphabet:["0"; "1";])
-  |> Core.List.map ~f:(Helpers.pad ~basis:5 ~direction:Helpers.OnLeft ~byte:'0')
-  |> Core.List.reduce_exn ~f:(^)
+  |> Base.String.lowercase
+  |> Base.String.to_list
+  |> Base.List.filter ~f:((!=) ' ')
+  |> Base.List.map ~f:reverse_base32_alphabet
+  |> Base.List.map ~f:(int_to_base_x ~basis:2 ~alphabet:["0"; "1";])
+  |> Base.List.map ~f:(Helpers.pad ~basis:5 ~direction:Helpers.OnLeft ~byte:'0')
+  |> Base.List.reduce_exn ~f:(^)
   |> Z.of_string_base 2
   |> Nocrypto.Numeric.Z.to_cstruct_be ~size
   |> Cstruct.to_string
 
 let char_to_bits char =
   char
-  |> Core.Char.to_int
+  |> Base.Char.to_int
   |> int_to_base_x ~basis:2 ~alphabet:["0"; "1";]
   |> Helpers.pad ~basis:8 ~direction:Helpers.OnLeft ~byte:'0'
 
@@ -50,9 +50,9 @@ let bits_to_int bits =
 
 let extract_to_base32 ~pos ~len bits =
   bits
-  |> Core.String.sub ~pos ~len
+  |> Base.String.sub ~pos ~len
   |> bits_to_int
-  |> Core.List.nth_exn base32_alphabet
+  |> Base.List.nth_exn base32_alphabet
 
 let bits_to_base32 bits =
   let len = 5 in
@@ -68,11 +68,11 @@ let bits_to_base32 bits =
 
 let rec conv_loop ~idx ~max ~add buffer list =
   if idx >= max then buffer else
-  let fst = char_to_bits @@ Core.List.nth_exn list (idx + 0) in
-  let snd = char_to_bits @@ Core.List.nth_exn list (idx + 1) in
-  let trd = char_to_bits @@ Core.List.nth_exn list (idx + 2) in
-  let fth = char_to_bits @@ Core.List.nth_exn list (idx + 3) in
-  let fft = char_to_bits @@ Core.List.nth_exn list (idx + 4) in
+  let fst = char_to_bits @@ Base.List.nth_exn list (idx + 0) in
+  let snd = char_to_bits @@ Base.List.nth_exn list (idx + 1) in
+  let trd = char_to_bits @@ Base.List.nth_exn list (idx + 2) in
+  let fth = char_to_bits @@ Base.List.nth_exn list (idx + 3) in
+  let fft = char_to_bits @@ Base.List.nth_exn list (idx + 4) in
   let res = bits_to_base32 (fst ^ snd ^ trd ^ fth ^ fft) in
   conv_loop ~idx:(idx + add) ~max ~add (res :: buffer) list
 
@@ -81,10 +81,10 @@ let concat_with_space left right = left ^ " " ^ right
 let string_to_base32 data =
   let padded = Helpers.pad ~basis:5 ~direction:Helpers.OnLeft data in
   let length = String.length padded in
-  let chars  = Core.String.to_list padded in
+  let chars  = Base.String.to_list padded in
   let pieces = conv_loop ~idx:0 ~max:length ~add:5 [] chars in
   pieces
-  |> Core.List.rev
-  |> Core.List.reduce_exn ~f:concat_with_space
-  |> Core.String.uppercase
+  |> Base.List.rev
+  |> Base.List.reduce_exn ~f:concat_with_space
+  |> Base.String.uppercase
 

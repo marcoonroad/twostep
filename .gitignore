@@ -3,3 +3,5 @@ _build/
 *.swp
 dune-workspace
 coverage/
+bisect*.out
+bisect*.coverage
