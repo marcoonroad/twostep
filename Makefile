@@ -94,8 +94,7 @@ coverage: clean
 	@ mv ./coverage/* ./docs/apicov/
 
 report: coverage
-	@ opam install ocveralls --yes
-	@ ocveralls --prefix '_build/default' `find . -name 'bisect*.out'` --send
+	@ bisect-ppx-report send-to Coveralls
 
 .PHONY: local-site-setup
 local-site-setup:
