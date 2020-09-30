@@ -8,7 +8,7 @@ install: test -e .travis.opam.sh || wget https://raw.githubusercontent.com/ocaml
 script: bash -ex .travis-opam.sh
 env:
   global:
-    - PACKAGE=nocoiner
+    - PACKAGE=twostep
     - UPDATE_GCC_BINUTILS=1
     - OPAM_VERSION="2.0.0"
     - BISECT_ENABLE=YES
