@@ -45,11 +45,9 @@ format:
 	@ dune build @fmt --auto-promote || echo "\nSource code rewritten by format.\n"
 
 quick-test: build
-	@ make lint
 	@ ALCOTEST_QUICK_TESTS=1 dune runtest
 
 test: build
-	@ make lint
 	@ dune runtest --no-buffer -f -j 1
 
 docs-index:
