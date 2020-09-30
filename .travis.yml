@@ -14,11 +14,12 @@ env:
     - BISECT_ENABLE=YES
     - BISECT_SILENT=YES
   matrix:
-    - OCAML_VERSION=4.04 POST_INSTALL_HOOK="make test"
-    - OCAML_VERSION=4.05 POST_INSTALL_HOOK="make test"
-    - OCAML_VERSION=4.06 POST_INSTALL_HOOK="make lint; make test"
-    - OCAML_VERSION=4.07 POST_INSTALL_HOOK="make lint; make test"
-    - OCAML_VERSION=4.08 POST_INSTALL_HOOK="make lint; make test"
+    - OCAML_VERSION=4.03 POST_INSTALL_HOOK="make report"
+    - OCAML_VERSION=4.04 POST_INSTALL_HOOK="make report"
+    - OCAML_VERSION=4.05 POST_INSTALL_HOOK="make report"
+    - OCAML_VERSION=4.06 POST_INSTALL_HOOK="make lint; make report"
+    - OCAML_VERSION=4.07 POST_INSTALL_HOOK="make lint; make report"
+    - OCAML_VERSION=4.08 POST_INSTALL_HOOK="make lint; make report"
 os:
   - linux
   - osx

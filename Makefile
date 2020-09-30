@@ -93,6 +93,10 @@ coverage: clean
 		`find . -name 'bisect*.out'`
 	@ mv ./coverage/* ./docs/apicov/
 
+report: coverage
+	@ opam install ocveralls --yes
+	@ ocveralls --prefix '_build/default' `find . -name 'bisect*.out'` --send
+
 .PHONY: local-site-setup
 local-site-setup:
 	@ cd docs && bundle install --path vendor/bundle && cd ..
