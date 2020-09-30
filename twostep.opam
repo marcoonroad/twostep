@@ -28,5 +28,5 @@ depends: [
   "dune" {build & >= "1.6.2"}
   "cmdliner" {>= "1.0.2"}
   "bisect_ppx" {>= "1.4.0"}
-  "alcotest" {with-test & >= "0.8.4"}
+  "alcotest" {>= "0.8.4"}
 ]

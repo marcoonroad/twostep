@@ -35,6 +35,7 @@ clean: cleanup-files
 	@ dune clean
 
 lint-format:
+	@ opam install ocamlformat --yes
 	@ dune build @fmt
 
 lint:
@@ -42,6 +43,7 @@ lint:
 	@ make lint-format
 
 format:
+	@ opam install ocamlformat --yes
 	@ dune build @fmt --auto-promote || echo "\nSource code rewritten by format.\n"
 
 quick-test: build
@@ -49,6 +51,12 @@ quick-test: build
 
 test: build
 	@ dune runtest --no-buffer -f -j 1
+
+# to run inside docker alpine context
+binary: clear
+	@ dune build --profile deploy
+	@ cp `dune exec --profile deploy -- which twostep` ./twostep.exe
+	@ chmod a+rx ./twostep.exe
 
 docs-index:
 	@ cp README.md docs/index.md
