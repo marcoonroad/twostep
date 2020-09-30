@@ -6,7 +6,7 @@
   (ocamlopt_flags
    (:standard -O3 -verbose -ccopt -static)))
  (release
-  (flags
+  (ocamlopt_flags
    (:standard -O3))))
 
 (ignored_subdirs (docs))
