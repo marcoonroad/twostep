@@ -30,7 +30,7 @@ with:
 let secret: string = Twostep.TOTP.secret();; (* kinda "A222 BBBB 3333 D5D5" *)
 ```
 
-As an additional note, the `Twostep.secret` function above uses
+As an additional note, the `Twostep.TOTP.secret` function above uses
 a cryptographically safe PRNG, that is, a secure source of pseudo
 randomness. To generate the OTP code, for testing purposes mostly
 ('cause this one-time code should be generated on client-side -- unless
@@ -53,8 +53,8 @@ function:
 let valid: bool = Twostep.TOTP.verify ~secret:secret ~code:code ();;
 ```
 
-This function assumes the same configuration of `Twostep.code`,
-except for the clock drift, where `Twostep.verify` assumes too
+This function assumes the same configuration of `Twostep.TOTP.code`,
+except for the clock drift, where `Twostep.TOTP.verify` assumes too
 past and future 30 seconds (ideal on slow connections or latency
 problems). For the full API reference, please refer to:
 - [Auto-generated API docs](https://www.marcoonroad.dev/twostep/apiref/twostep/index.html)
