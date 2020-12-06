@@ -30,7 +30,7 @@ module Internals = struct
 end
 
 module type ITOTP = sig
-  val secret : unit -> string
+  val secret : ?bytes:int -> unit -> string
 
   val code :
        ?window:int
@@ -52,7 +52,7 @@ module type ITOTP = sig
 end
 
 module TOTP : ITOTP = struct
-  let secret () = Secret.generate ()
+  let secret ?(bytes = 10) () = Secret.generate ~bytes ()
 
   let code
       ?(window = 30) ?(drift = 0) ?(digits = 6) ?(hash = "SHA-1") ~secret () =

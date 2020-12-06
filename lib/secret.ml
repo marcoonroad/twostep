@@ -15,8 +15,15 @@ let __random_bits bits =
   NumZ.to_cstruct_be @@ RngZ.gen_r _min_random _max_random
 
 
-let generate () =
-  Base32.string_to_base32 @@ Cstruct.to_string @@ __random_bits 80
+let generate ~bytes () =
+  if bytes >= 10 && bytes mod 5 == 0
+  then
+    Base32.string_to_base32 @@ Cstruct.to_string @@ __random_bits @@ (8 * bytes)
+  else
+    failwith
+      ( "Invalid amount of bytes ("
+      ^ string_of_int bytes
+      ^ ") for secret, it must be at least 10 and divisible by 5!" )
 
 
 let _ = Nocrypto_entropy_unix.initialize ()

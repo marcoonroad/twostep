@@ -84,6 +84,17 @@ teams. As a disclaimer, I'm not responsible for any damages.
 
 ---
 
+## Tips
+
+For stronger/longer secrets, you can use the `~bytes` optional parameter
+(the default and minimal value is 10,
+_with the invariant that it must be divisible by 5_):
+
+```ocaml
+let secret: string = Twostep.TOTP.secret ~bytes:20 ();;
+(* kinda "D3D3 F5F5 A2A2 3B3B GGGG 7K7K 5555 Q2Q2" *)
+```
+
 ## Remarks
 
 Pull requests are welcome! Happy hacking! Hope this project can

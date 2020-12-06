@@ -37,68 +37,68 @@ let base32_alphabet =
 let reverse_base32_alphabet = function
   | 'a' ->
       0
-  | 'g' ->
-      6
-  | 'm' ->
-      12
-  | 's' ->
-      18
-  | 'y' ->
-      24
-  | '6' ->
-      30
   | 'b' ->
       1
-  | 'h' ->
-      7
-  | 'n' ->
-      13
-  | 't' ->
-      19
-  | 'z' ->
-      25
-  | '7' ->
-      31
   | 'c' ->
       2
-  | 'i' ->
-      8
-  | 'o' ->
-      14
-  | 'u' ->
-      20
-  | '2' ->
-      26
   | 'd' ->
       3
-  | 'j' ->
-      9
-  | 'p' ->
-      15
-  | 'v' ->
-      21
-  | '3' ->
-      27
   | 'e' ->
       4
-  | 'k' ->
-      10
-  | 'q' ->
-      16
-  | 'w' ->
-      22
-  | '4' ->
-      28
   | 'f' ->
       5
+  | 'g' ->
+      6
+  | 'h' ->
+      7
+  | 'i' ->
+      8
+  | 'j' ->
+      9
+  | 'k' ->
+      10
   | 'l' ->
       11
+  | 'm' ->
+      12
+  | 'n' ->
+      13
+  | 'o' ->
+      14
+  | 'p' ->
+      15
+  | 'q' ->
+      16
   | 'r' ->
       17
+  | 's' ->
+      18
+  | 't' ->
+      19
+  | 'u' ->
+      20
+  | 'v' ->
+      21
+  | 'w' ->
+      22
   | 'x' ->
       23
+  | 'y' ->
+      24
+  | 'z' ->
+      25
+  | '2' ->
+      26
+  | '3' ->
+      27
+  | '4' ->
+      28
   | '5' ->
       29
+  | '6' ->
+      30
+  | '7' ->
+      31
   | wat ->
       failwith ("Invalid base32 character: " ^ Base.String.of_char wat)
 
@@ -113,7 +113,7 @@ let rec enc_loop data ~basis ~alphabet number =
     enc_loop (digit ^ data) ~basis ~alphabet result
 
 
-let int_to_base_x ?(basis = 32) ?(alphabet = base32_alphabet) number =
+let int_to_base_x ~basis ~alphabet number =
   if number < basis
   then List.nth alphabet number
   else enc_loop "" ~basis ~alphabet number

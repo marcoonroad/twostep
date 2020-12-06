@@ -12,7 +12,7 @@ let padOnLeft = OnLeft
 
 let padOnRight = OnRight
 
-let pad ~basis ?(direction = OnRight) ?(byte = __nullchar) msg =
+let pad ~basis ~direction ?(byte = __nullchar) msg =
   let length = String.length msg in
   let remainder = length mod basis in
   if remainder = 0

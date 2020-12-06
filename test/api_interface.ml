@@ -75,7 +75,58 @@ let __format_case () =
   let code8 = TOTP.code ~secret ~digits:8 () in
   check bool "secret must be under base-32" true @@ _is_base32 secret ;
   check bool "otp code w/ digits=6 must be int" true @@ _is_integer code6 ;
-  check bool "otp code w/ digits=8 must be int" true @@ _is_integer code8
+  check bool "otp code w/ digits=8 must be int" true @@ _is_integer code8 ;
+  let procedure () = ignore @@ TOTP.code ~hash:"SHA-0" ~secret () in
+  let failure = Failure "Invalid hash algorithm: SHA-0" in
+  check_raises "otp code fails if hash is invalid" failure procedure ;
+  let procedure () = ignore @@ TOTP.code ~secret:"ABCD E9FG H123 4567" () in
+  let failure = Failure "Invalid base32 character: 9" in
+  check_raises "otp code fails if secret is invalid" failure procedure ;
+  ignore @@ TOTP.code ~secret:"ABCD EFGH IJKL MNOP" () ;
+  ignore @@ TOTP.code ~secret:"QRST UVWX YZ23 4567" ()
+
+
+let __secret_case () =
+  let secret16 = _drop_spaces @@ TOTP.secret () in
+  let secret24 = _drop_spaces @@ TOTP.secret ~bytes:15 () in
+  let secret32 = _drop_spaces @@ TOTP.secret ~bytes:20 () in
+  check
+    int
+    "10-bytes secret must contain 16 characters"
+    (String.length secret16)
+    16 ;
+  check
+    int
+    "15-bytes secret must contain 24 characters"
+    (String.length secret24)
+    24 ;
+  check
+    int
+    "20-bytes secret must contain 32 characters"
+    (String.length secret32)
+    32 ;
+  let procedure bytes () = ignore @@ TOTP.secret ~bytes () in
+  let failureA =
+    Failure
+      "Invalid amount of bytes (8) for secret, it must be at least 10 and \
+       divisible by 5!"
+  in
+  let failureB =
+    Failure
+      "Invalid amount of bytes (12) for secret, it must be at least 10 and \
+       divisible by 5!"
+  in
+  let failureC =
+    Failure
+      "Invalid amount of bytes (19) for secret, it must be at least 10 and \
+       divisible by 5!"
+  in
+  check_raises "secret generation should fail when bytes = 8" failureA
+  @@ procedure 8 ;
+  check_raises "secret generation should fail when bytes = 12" failureB
+  @@ procedure 12 ;
+  check_raises "secret generation should fail when bytes = 19" failureC
+  @@ procedure 19
 
 
 let __verification_failure_case () =
@@ -118,10 +169,13 @@ let __verification_success_case () =
 
 let suite =
   [ ("secret and otp code length", `Quick, __length_case)
+  ; ("secret-only length for custom bytes", `Quick, __secret_case)
   ; ("secret and otp code format", `Quick, __format_case)
   ; ("otp code verification failure", `Quick, __verification_failure_case)
   ; ("otp code verification success", `Quick, __verification_success_case)
   ]
 
 
-let () = run "Twostep tests" [ ("test suite", suite) ]
+let () =
+  Nocrypto_entropy_unix.initialize () ;
+  run "Twostep tests" [ ("test suite", suite) ]

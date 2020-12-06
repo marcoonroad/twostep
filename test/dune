@@ -11,4 +11,4 @@
 (test
  (name api_interface)
  (modules api_interface)
- (libraries base twostep alcotest))
+ (libraries base nocrypto nocrypto.unix twostep alcotest))
