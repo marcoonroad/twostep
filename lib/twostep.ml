@@ -69,3 +69,70 @@ module TOTP : ITOTP = struct
     || number = code ~secret ~window ~digits ~hash ~drift:0 ()
     || number = code ~secret ~window ~digits ~hash ~drift:1 ()
 end
+
+module type IHOTP = sig
+  val secret : ?bytes:int -> unit -> string
+
+  val codes :
+       ?digits:int
+    -> ?hash:string
+    -> ?amount:int
+    -> counter:int
+    -> secret:string
+    -> unit
+    -> string list
+
+  val verify :
+       ?digits:int
+    -> ?hash:string
+    -> ?ahead:int
+    -> counter:int
+    -> secret:string
+    -> codes:(string list)
+    -> unit
+    -> bool * int
+end
+
+module HOTP : IHOTP = struct
+  let secret ?(bytes = 10) () = Secret.generate ~bytes ()
+
+  let code ~digits ~hash ~counter ~secret () =
+    let decoded = Base32.base32_to_string secret in
+    let counter = Base.Int64.of_int counter in
+    let counter' =
+      Cstruct.to_string
+      @@ Nocrypto.Numeric.Z.to_cstruct_be ~size:8
+      @@ Z.of_int64 counter
+    in
+    let image = Hmac.hmac ~hash ~secret:decoded counter' in
+    Internals.truncate ~image ~digits
+
+  let codes ?(digits = 6) ?(hash = "SHA-1") ?(amount = 1) ~counter ~secret () =
+    assert (amount >= 1);
+    let step index =
+      code ~digits ~hash ~counter:(counter + index) ~secret ()
+    in
+    Base.List.init amount ~f:step
+
+  (*
+  let check ~digits ~hash ~counter ~secret ~code:number () =
+    number = code ~digits ~hash ~counter ~secret ()
+  *)
+
+  let verify ?(digits = 6) ?(hash = "SHA-1") ?(ahead = 0) ~counter ~secret ~codes:numbers () =
+    assert (ahead >= 0);
+    let amount = Base.List.length numbers in
+    let step index =
+      let valid = numbers = codes ~digits ~hash ~amount ~counter:(counter + index) ~secret () in
+      let next = counter + index + amount in
+      (valid, next)
+    in
+    let results = Base.List.init (ahead + 1) ~f:step in
+    let folding previous current =
+      if fst previous then previous
+      else if fst current then current
+      else (false, counter + amount)
+    in
+    let invalid = (false, counter + amount) in
+    Base.List.fold_left results ~init:invalid ~f:folding
+end

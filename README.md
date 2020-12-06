@@ -64,9 +64,9 @@ You can test this library against mobile apps such as Google
 Authenticator or Microsoft Authenticator without no problems
 (I have tested myself too).
 
----
+## Security Concerns
 
-**Important**: The generated secret must be sent for the
+The generated secret must be sent for the
 client in a secure channel, such as **HTTPS/TLS**, and must
 be stored encrypted in your servers' databases. A good
 approach is to encrypt with a KDF on the client password,
@@ -78,6 +78,20 @@ send the client password twice, during authentication and
 during 2-step verification, and after that, erasing the
 password persisted on front (nice UX for the client to not
 type twice her own password).
+
+Also, you should track valid TOTP codes sent from the end user in
+a persisted storage (such as databases). This is just to avoid
+**replay attacks** once an attacker intercepts a valid TOTP code from
+the end user. Your tracking of the TOTP code should be a pair
+`(otpCode, timeNonce)`, where `timeNone` is the current interval/period
+and the `otpCode` is verified/checked as valid. Keep in mind that
+you should only track valid/verified TOTP codes to not waste storage
+costs with invalid TOTP codes (i.e, codes that can't be exploited by
+replay attacks). This rule only applies for TOTP algorithms, not for
+HOTP algorithms too -- 'cause they have the counter increased even for
+failed verification attempts.
+
+---
 
 This is a warning. Implement such system carefully, and if
 possible, with audits from external experts and security
