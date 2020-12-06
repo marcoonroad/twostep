@@ -88,7 +88,7 @@ module type IHOTP = sig
     -> ?ahead:int
     -> counter:int
     -> secret:string
-    -> codes:(string list)
+    -> codes:string list
     -> unit
     -> bool * int
 end
@@ -107,30 +107,43 @@ module HOTP : IHOTP = struct
     let image = Hmac.hmac ~hash ~secret:decoded counter' in
     Internals.truncate ~image ~digits
 
+
   let codes ?(digits = 6) ?(hash = "SHA-1") ?(amount = 1) ~counter ~secret () =
-    assert (amount >= 1);
-    let step index =
-      code ~digits ~hash ~counter:(counter + index) ~secret ()
-    in
+    assert (amount >= 1) ;
+    let step index = code ~digits ~hash ~counter:(counter + index) ~secret () in
     Base.List.init amount ~f:step
+
 
   (*
   let check ~digits ~hash ~counter ~secret ~code:number () =
     number = code ~digits ~hash ~counter ~secret ()
   *)
 
-  let verify ?(digits = 6) ?(hash = "SHA-1") ?(ahead = 0) ~counter ~secret ~codes:numbers () =
-    assert (ahead >= 0);
+  let verify
+      ?(digits = 6)
+      ?(hash = "SHA-1")
+      ?(ahead = 0)
+      ~counter
+      ~secret
+      ~codes:numbers
+      () =
+    assert (ahead >= 0) ;
+    assert (Base.List.length numbers >= 1) ;
     let amount = Base.List.length numbers in
     let step index =
-      let valid = numbers = codes ~digits ~hash ~amount ~counter:(counter + index) ~secret () in
+      let valid =
+        numbers
+        = codes ~digits ~hash ~amount ~counter:(counter + index) ~secret ()
+      in
       let next = counter + index + amount in
       (valid, next)
     in
     let results = Base.List.init (ahead + 1) ~f:step in
     let folding previous current =
-      if fst previous then previous
-      else if fst current then current
+      if fst previous
+      then previous
+      else if fst current
+      then current
       else (false, counter + amount)
     in
     let invalid = (false, counter + amount) in

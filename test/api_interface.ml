@@ -172,22 +172,21 @@ let __hotp_resynch_case () =
   let secret = HOTP.secret () in
   let codes = HOTP.codes ~counter:0 ~secret () in
   let codes' = HOTP.codes ~counter:0 ~secret () in
-  check (list string) "hotp code generation is deterministic" codes codes';
+  check (list string) "hotp code generation is deterministic" codes codes' ;
   let result = HOTP.verify ~counter:0 ~secret ~codes () in
-  check bool "should pass verification flag with true" true @@ fst result;
-  check int "should increment counter as next one" 1 @@ snd result;
+  check bool "should pass verification flag with true" true @@ fst result ;
+  check int "should increment counter as next one" 1 @@ snd result ;
   let secret = HOTP.secret ~bytes:15 () in
   let result = HOTP.verify ~counter:0 ~secret ~codes () in
-  check bool "should fail verification flag with false" false @@ fst result;
-  check int "should increment counter even on failure" 1 @@ snd result;
+  check bool "should fail verification flag with false" false @@ fst result ;
+  check int "should increment counter even on failure" 1 @@ snd result ;
   let codes = HOTP.codes ~counter:7 ~amount:3 ~secret () in
   let result = HOTP.verify ~counter:4 ~ahead:6 ~secret ~codes () in
-  check bool "should pass verification flag with true" true @@ fst result;
-  check int "should increment counter as next one" 10 @@ snd result;
+  check bool "should pass verification flag with true" true @@ fst result ;
+  check int "should increment counter as next one" 10 @@ snd result ;
   let result = HOTP.verify ~counter:2 ~ahead:4 ~secret ~codes () in
-  check bool "should fail verification flag with false" false @@ fst result;
+  check bool "should fail verification flag with false" false @@ fst result ;
   check int "should increment counter even on failure" 5 @@ snd result
-
 
 
 let suite =

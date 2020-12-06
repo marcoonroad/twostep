@@ -438,157 +438,157 @@
 
 
 let reverse_base32_alphabet = function
-  | <span data-count="35">'</span>a' -&gt;
+  | <span data-count="14">'</span>a' -&gt;
       0
-  | <span data-count="5">'</span>b' -&gt;
+  | <span data-count="2">'</span>b' -&gt;
       1
-  | <span data-count="5">'</span>c' -&gt;
+  | <span data-count="69">'</span>c' -&gt;
       2
-  | <span data-count="44">'</span>d' -&gt;
+  | <span data-count="78">'</span>d' -&gt;
       3
-  | <span data-count="44">'</span>e' -&gt;
+  | <span data-count="66">'</span>e' -&gt;
       4
-  | <span data-count="16">'</span>f' -&gt;
+  | <span data-count="44">'</span>f' -&gt;
       5
-  | <span data-count="25">'</span>g' -&gt;
+  | <span data-count="68">'</span>g' -&gt;
       6
-  | <span data-count="4">'</span>h' -&gt;
+  | <span data-count="43">'</span>h' -&gt;
       7
-  | <span data-count="13">'</span>i' -&gt;
+  | <span data-count="50">'</span>i' -&gt;
       8
-  | <span data-count="16">'</span>j' -&gt;
+  | <span data-count="83">'</span>j' -&gt;
       9
-  | <span data-count="19">'</span>k' -&gt;
+  | <span data-count="13">'</span>k' -&gt;
       10
-  | <span data-count="22">'</span>l' -&gt;
+  | <span data-count="13">'</span>l' -&gt;
       11
-  | <span data-count="22">'</span>m' -&gt;
+  | <span data-count="47">'</span>m' -&gt;
       12
-  | <span data-count="10">'</span>n' -&gt;
+  | <span data-count="50">'</span>n' -&gt;
       13
-  | <span data-count="25">'</span>o' -&gt;
+  | <span data-count="68">'</span>o' -&gt;
       14
-  | <span data-count="16">'</span>p' -&gt;
+  | <span data-count="1">'</span>p' -&gt;
       15
-  | <span data-count="52">'</span>q' -&gt;
+  | <span data-count="37">'</span>q' -&gt;
       16
-  | <span data-count="22">'</span>r' -&gt;
+  | <span data-count="25">'</span>r' -&gt;
       17
-  | <span data-count="28">'</span>s' -&gt;
+  | <span data-count="50">'</span>s' -&gt;
       18
-  | <span data-count="16">'</span>t' -&gt;
+  | <span data-count="151">'</span>t' -&gt;
       19
-  | <span data-count="19">'</span>u' -&gt;
+  | <span data-count="65">'</span>u' -&gt;
       20
-  | <span data-count="28">'</span>v' -&gt;
+  | <span data-count="87">'</span>v' -&gt;
       21
-  | <span data-count="28">'</span>w' -&gt;
+  | <span data-count="44">'</span>w' -&gt;
       22
-  | <span data-count="19">'</span>x' -&gt;
+  | <span data-count="53">'</span>x' -&gt;
       23
-  | <span data-count="16">'</span>y' -&gt;
+  | <span data-count="34">'</span>y' -&gt;
       24
-  | <span data-count="28">'</span>z' -&gt;
+  | <span data-count="70">'</span>z' -&gt;
       25
-  | <span data-count="34">'</span>2' -&gt;
+  | <span data-count="142">'</span>2' -&gt;
       26
-  | <span data-count="1">'</span>3' -&gt;
+  | <span data-count="80">'</span>3' -&gt;
       27
-  | <span data-count="1">'</span>4' -&gt;
+  | <span data-count="28">'</span>4' -&gt;
       28
-  | <span data-count="19">'</span>5' -&gt;
+  | <span data-count="1">'</span>5' -&gt;
       29
-  | <span data-count="16">'</span>6' -&gt;
+  | <span data-count="37">'</span>6' -&gt;
       30
-  | <span data-count="13">'</span>7' -&gt;
+  | <span data-count="56">'</span>7' -&gt;
       31
   | <span data-count="1">w</span>at -&gt;
       failwith ("Invalid base32 character: " ^ Base.String.of_cha<span data-count="1">r</span> wat)
 
 
 let rec enc_loop data ~basis ~alphabet number =
-  <span data-count="4003">i</span>f number &lt;= 0
-  then <span data-count="713">d</span>ata
+  <span data-count="9676">i</span>f number &lt;= 0
+  then <span data-count="1770">d</span>ata
   else
-    <span data-count="3290">l</span>et remainder = number mod basis in
+    <span data-count="7906">l</span>et remainder = number mod basis in
     let result = number / basis in
     let digit = List.nth alphabet remainder in
-    <span data-count="3290">e</span>nc_loop (digit ^ data) ~basis ~alphabet result
+    <span data-count="7906">e</span>nc_loop (digit ^ data) ~basis ~alphabet result
 
 
 let int_to_base_x ~basis ~alphabet number =
-  <span data-count="751">i</span>f number &lt; basis
-  then <span data-count="38">L</span>ist.nth alphabet number
-  else <span data-count="713">e</span>nc_loop "" ~basis ~alphabet number
+  <span data-count="1784">i</span>f number &lt; basis
+  then <span data-count="14">L</span>ist.nth alphabet number
+  else <span data-count="1770">e</span>nc_loop "" ~basis ~alphabet number
 
 
-let base32_to_string ?(size = <span data-count="42">1</span>0) base32 =
-  <span data-count="42">b</span>ase32
+let base32_to_string ?(size = <span data-count="85">1</span>0) base32 =
+  <span data-count="85">b</span>ase32
   |&gt; Base.String.lowercase
-  |&gt; <span data-count="42">B</span>ase.String.to_list
-  |&gt; <span data-count="42">B</span>ase.List.filter ~f:(( != ) ' ')
-  |&gt; <span data-count="42">B</span>ase.List.map ~f:reverse_base32_alphabet
-  |&gt; <span data-count="41">B</span>ase.List.map ~f:(int_to_base_x ~basis:2 ~alphabet:[ "0"; "1" ])
-  |&gt; <span data-count="41">B</span>ase.List.map ~f:(Helpers.pad ~basis:5 ~direction:Helpers.OnLeft ~byte:'0')
-  |&gt; <span data-count="41">B</span>ase.List.reduce_exn ~f:( ^ )
-  |&gt; <span data-count="41">Z</span>.of_string_base 2
-  |&gt; <span data-count="41">N</span>ocrypto.Numeric.Z.to_cstruct_be ~size
-  |&gt; <span data-count="41">C</span>struct.to_string
+  |&gt; <span data-count="85">B</span>ase.String.to_list
+  |&gt; <span data-count="85">B</span>ase.List.filter ~f:(( != ) ' ')
+  |&gt; <span data-count="85">B</span>ase.List.map ~f:reverse_base32_alphabet
+  |&gt; <span data-count="84">B</span>ase.List.map ~f:(int_to_base_x ~basis:2 ~alphabet:[ "0"; "1" ])
+  |&gt; <span data-count="84">B</span>ase.List.map ~f:(Helpers.pad ~basis:5 ~direction:Helpers.OnLeft ~byte:'0')
+  |&gt; <span data-count="84">B</span>ase.List.reduce_exn ~f:( ^ )
+  |&gt; <span data-count="84">Z</span>.of_string_base 2
+  |&gt; <span data-count="84">N</span>ocrypto.Numeric.Z.to_cstruct_be ~size
+  |&gt; <span data-count="84">C</span>struct.to_string
 
 
 let char_to_bits char =
-  <span data-count="95">c</span>har
+  <span data-count="120">c</span>har
   |&gt; Base.Char.to_int
-  |&gt; <span data-count="95">i</span>nt_to_base_x ~basis:2 ~alphabet:[ "0"; "1" ]
-  |&gt; <span data-count="95">H</span>elpers.pad ~basis:8 ~direction:Helpers.OnLeft ~byte:'0'
+  |&gt; <span data-count="120">i</span>nt_to_base_x ~basis:2 ~alphabet:[ "0"; "1" ]
+  |&gt; <span data-count="120">H</span>elpers.pad ~basis:8 ~direction:Helpers.OnLeft ~byte:'0'
 
 
-let bits_to_int bits = <span data-count="152">Z</span>.to_int @@ Z.of_string_bas<span data-count="152">e</span> 2 bits
+let bits_to_int bits = <span data-count="192">Z</span>.to_int @@ Z.of_string_bas<span data-count="192">e</span> 2 bits
 
 let extract_to_base32 ~pos ~len bits =
-  <span data-count="152">b</span>its
+  <span data-count="192">b</span>its
   |&gt; Base.String.sub ~pos ~len
-  |&gt; <span data-count="152">b</span>its_to_int
-  |&gt; <span data-count="152">B</span>ase.List.nth_exn base32_alphabet
+  |&gt; <span data-count="192">b</span>its_to_int
+  |&gt; <span data-count="192">B</span>ase.List.nth_exn base32_alphabet
 
 
 let bits_to_base32 bits =
-  <span data-count="19">l</span>et len = 5 in
+  <span data-count="24">l</span>et len = 5 in
   let c1 = extract_to_base32 ~pos:0 ~len bits in
-  <span data-count="19">l</span>et c2 = extract_to_base32 ~pos:5 ~len bits in
-  <span data-count="19">l</span>et c3 = extract_to_base32 ~pos:10 ~len bits in
-  <span data-count="19">l</span>et c4 = extract_to_base32 ~pos:15 ~len bits in
-  <span data-count="19">l</span>et c5 = extract_to_base32 ~pos:20 ~len bits in
-  <span data-count="19">l</span>et c6 = extract_to_base32 ~pos:25 ~len bits in
-  <span data-count="19">l</span>et c7 = extract_to_base32 ~pos:30 ~len bits in
-  <span data-count="19">l</span>et c8 = extract_to_base32 ~pos:35 ~len bits in
-  <span data-count="19">c</span>1 ^ c2 ^ c3 ^ c4 ^ " " ^ c5 ^ c6 ^ c7 ^ c8
+  <span data-count="24">l</span>et c2 = extract_to_base32 ~pos:5 ~len bits in
+  <span data-count="24">l</span>et c3 = extract_to_base32 ~pos:10 ~len bits in
+  <span data-count="24">l</span>et c4 = extract_to_base32 ~pos:15 ~len bits in
+  <span data-count="24">l</span>et c5 = extract_to_base32 ~pos:20 ~len bits in
+  <span data-count="24">l</span>et c6 = extract_to_base32 ~pos:25 ~len bits in
+  <span data-count="24">l</span>et c7 = extract_to_base32 ~pos:30 ~len bits in
+  <span data-count="24">l</span>et c8 = extract_to_base32 ~pos:35 ~len bits in
+  <span data-count="24">c</span>1 ^ c2 ^ c3 ^ c4 ^ " " ^ c5 ^ c6 ^ c7 ^ c8
 
 
 let rec conv_loop ~idx ~max ~add buffer list =
-  <span data-count="27">i</span>f idx &gt;= max
-  then <span data-count="8">b</span>uffer
+  <span data-count="34">i</span>f idx &gt;= max
+  then <span data-count="10">b</span>uffer
   else
-    <span data-count="19">l</span>et fst = char_to_bits @@ Base.List.nth_ex<span data-count="19">n</span> list (idx + 0) in
-    <span data-count="19">l</span>et snd = char_to_bits @@ Base.List.nth_ex<span data-count="19">n</span> list (idx + 1) in
-    <span data-count="19">l</span>et trd = char_to_bits @@ Base.List.nth_ex<span data-count="19">n</span> list (idx + 2) in
-    <span data-count="19">l</span>et fth = char_to_bits @@ Base.List.nth_ex<span data-count="19">n</span> list (idx + 3) in
-    <span data-count="19">l</span>et fft = char_to_bits @@ Base.List.nth_ex<span data-count="19">n</span> list (idx + 4) in
-    <span data-count="19">l</span>et res = bits_to_base32 (fst ^ snd ^ trd ^ fth ^ fft) in
-    <span data-count="19">c</span>onv_loop ~idx:(idx + add) ~max ~add (res :: buffer) list
+    <span data-count="24">l</span>et fst = char_to_bits @@ Base.List.nth_ex<span data-count="24">n</span> list (idx + 0) in
+    <span data-count="24">l</span>et snd = char_to_bits @@ Base.List.nth_ex<span data-count="24">n</span> list (idx + 1) in
+    <span data-count="24">l</span>et trd = char_to_bits @@ Base.List.nth_ex<span data-count="24">n</span> list (idx + 2) in
+    <span data-count="24">l</span>et fth = char_to_bits @@ Base.List.nth_ex<span data-count="24">n</span> list (idx + 3) in
+    <span data-count="24">l</span>et fft = char_to_bits @@ Base.List.nth_ex<span data-count="24">n</span> list (idx + 4) in
+    <span data-count="24">l</span>et res = bits_to_base32 (fst ^ snd ^ trd ^ fth ^ fft) in
+    <span data-count="24">c</span>onv_loop ~idx:(idx + add) ~max ~add (res :: buffer) list
 
 
-let concat_with_space left right = <span data-count="11">l</span>eft ^ " " ^ right
+let concat_with_space left right = <span data-count="14">l</span>eft ^ " " ^ right
 
 let string_to_base32 data =
-  <span data-count="8">l</span>et padded = Helpers.pad ~basis:5 ~direction:Helpers.OnLeft data in
-  <span data-count="8">l</span>et length = String.length padded in
-  <span data-count="8">l</span>et chars = Base.String.to_list padded in
-  <span data-count="8">l</span>et pieces = conv_loop ~idx:0 ~max:length ~add:5 [] chars in
-  <span data-count="8">p</span>ieces
+  <span data-count="10">l</span>et padded = Helpers.pad ~basis:5 ~direction:Helpers.OnLeft data in
+  <span data-count="10">l</span>et length = String.length padded in
+  <span data-count="10">l</span>et chars = Base.String.to_list padded in
+  <span data-count="10">l</span>et pieces = conv_loop ~idx:0 ~max:length ~add:5 [] chars in
+  <span data-count="10">p</span>ieces
   |&gt; Base.List.rev
-  |&gt; <span data-count="8">B</span>ase.List.reduce_exn ~f:concat_with_space
-  |&gt; <span data-count="8">B</span>ase.String.uppercase
+  |&gt; <span data-count="10">B</span>ase.List.reduce_exn ~f:concat_with_space
+  |&gt; <span data-count="10">B</span>ase.String.uppercase
 </code></pre>
       </div>
     </div>
