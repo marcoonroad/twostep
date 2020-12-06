@@ -56,8 +56,9 @@ let valid: bool = Twostep.TOTP.verify ~secret:secret ~code:code ();;
 This function assumes the same configuration of `Twostep.TOTP.code`,
 except for the clock drift, where `Twostep.TOTP.verify` assumes too
 past and future 30 seconds (ideal on slow connections or latency
-problems). For the full API reference, please refer to:
-- [Auto-generated API docs](https://www.marcoonroad.dev/twostep/apiref/twostep/index.html)
+problems). For the full API reference or coverage status, please refer to:
+- [Generated API docs](https://www.marcoonroad.dev/twostep/apiref/twostep/index.html)
+- [Generated API coverage](https://www.marcoonroad.dev/twostep/apicov/index.html)
 
 You can test this library against mobile apps such as Google
 Authenticator or Microsoft Authenticator without no problems
@@ -83,6 +84,17 @@ possible, with audits from external experts and security
 teams. As a disclaimer, I'm not responsible for any damages.
 
 ---
+
+## Tips
+
+For stronger/longer secrets, you can use the `~bytes` optional parameter
+(the default and minimal value is 10,
+_with the invariant that it must be divisible by 5_):
+
+```ocaml
+let secret: string = Twostep.TOTP.secret ~bytes:20 ();;
+(* kinda "D3D3 F5F5 A2A2 3B3B GGGG 7K7K 5555 Q2Q2" *)
+```
 
 ## Remarks
 

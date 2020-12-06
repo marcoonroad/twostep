@@ -183,23 +183,23 @@
   let padOnRight = Helpers.padOnRight
 
   let truncate ~image ~digits =
-    <span data-count="66">l</span>et bytes =
-      Base.List.map ~f:Base.Char.to_int @@ Base.String.to_lis<span data-count="66">t</span> image
+    <span data-count="69">l</span>et bytes =
+      Base.List.map ~f:Base.Char.to_int @@ Base.String.to_lis<span data-count="69">t</span> image
     in
-    <span data-count="66">l</span>et offset =
-      Base.List.nth_ex<span data-count="66">n</span> bytes (Base.List.lengt<span data-count="66">h</span> bytes - 1) land 0xf
+    <span data-count="69">l</span>et offset =
+      Base.List.nth_ex<span data-count="69">n</span> bytes (Base.List.lengt<span data-count="69">h</span> bytes - 1) land 0xf
     in
-    let fst = (Base.List.nth_ex<span data-count="66">n</span> bytes (offset + 0) land 0x7f) lsl 24 in
-    let snd = (Base.List.nth_ex<span data-count="66">n</span> bytes (offset + 1) land 0xff) lsl 16 in
-    let trd = (Base.List.nth_ex<span data-count="66">n</span> bytes (offset + 2) land 0xff) lsl 8 in
-    let fth = (Base.List.nth_ex<span data-count="66">n</span> bytes (offset + 3) land 0xff) lsl 0 in
-    let num = fst lor snd lor trd lor fth mod Base.Int.po<span data-count="66">w</span> 10 digits in
+    let fst = (Base.List.nth_ex<span data-count="69">n</span> bytes (offset + 0) land 0x7f) lsl 24 in
+    let snd = (Base.List.nth_ex<span data-count="69">n</span> bytes (offset + 1) land 0xff) lsl 16 in
+    let trd = (Base.List.nth_ex<span data-count="69">n</span> bytes (offset + 2) land 0xff) lsl 8 in
+    let fth = (Base.List.nth_ex<span data-count="69">n</span> bytes (offset + 3) land 0xff) lsl 0 in
+    let num = fst lor snd lor trd lor fth mod Base.Int.po<span data-count="69">w</span> 10 digits in
     Helpers.pad ~basis:digits ~byte:'0' ~direction:Helpers.OnLeft
-    @@ Base.Int.to_strin<span data-count="66">g</span> num
+    @@ Base.Int.to_strin<span data-count="69">g</span> num
 end
 
 module type ITOTP = sig
-  val secret : unit -&gt; string
+  val secret : ?bytes:int -&gt; unit -&gt; string
 
   val code :
        ?window:int
@@ -221,15 +221,15 @@ module type ITOTP = sig
 end
 
 module TOTP : ITOTP = struct
-  let secret () = <span data-count="5">S</span>ecret.generate ()
+  let secret ?(bytes = <span data-count="6">1</span>0) () = <span data-count="11">S</span>ecret.generate ~bytes ()
 
   let code
-      ?(window = <span data-count="14">3</span>0) ?(drift = <span data-count="7">0</span>) ?(digits = <span data-count="10">6</span>) ?(hash = <span data-count="14">"</span>SHA-1") ~secret () =
-    <span data-count="38">a</span>ssert (digits = <span data-count="36">6</span> || digits = <span data-count="2">8</span>) ;
+      ?(window = <span data-count="18">3</span>0) ?(drift = <span data-count="11">0</span>) ?(digits = <span data-count="14">6</span>) ?(hash = <span data-count="17">"</span>SHA-1") ~secret () =
+    <span data-count="42">a</span>ssert (digits = <span data-count="40">6</span> || digits = <span data-count="2">8</span>) ;
     let decoded = Base32.base32_to_string secret in
-    <span data-count="38">l</span>et counter = Time.counter ~timestep:window ~drift () in
-    <span data-count="38">l</span>et image = Hmac.hmac ~hash ~secret:decoded counter in
-    <span data-count="38">I</span>nternals.truncate ~image ~digits
+    <span data-count="41">l</span>et counter = Time.counter ~timestep:window ~drift () in
+    <span data-count="41">l</span>et image = Hmac.hmac ~hash ~secret:decoded counter in
+    <span data-count="40">I</span>nternals.truncate ~image ~digits
 
 
   let verify
