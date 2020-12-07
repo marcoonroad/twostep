@@ -23,7 +23,7 @@ project with OPAM's `pin` command.
 
 The authentication of 2-step verification needs prior known
 and shared secret between the client and server. If no
-secret was send before, you can generate this Base32 secret
+secret was send before, you can generate this Base-32 secret
 with:
 
 ```ocaml
@@ -32,9 +32,7 @@ let secret: string = Twostep.TOTP.secret();; (* kinda "A222 BBBB 3333 D5D5" *)
 
 As an additional note, the `Twostep.TOTP.secret` function above uses
 a cryptographically safe PRNG, that is, a secure source of pseudo
-randomness. To generate the OTP code, for testing purposes mostly
-('cause this one-time code should be generated on client-side -- unless
-you use this library on the client's device), you can use this function:
+randomness. To generate an OTP code, you can use this function:
 
 ```ocaml
 let code: string = Twostep.TOTP.code ~secret:secret ();; (* kinda "098123" *)
@@ -57,7 +55,7 @@ This function assumes the same configuration of `Twostep.TOTP.code`,
 except for the clock drift, where `Twostep.TOTP.verify` assumes too
 past and future 30 seconds (ideal on slow connections or latency
 problems). For the full API reference or coverage status, please refer to:
-- [Generated API docs](https://www.marcoonroad.dev/twostep/apiref/twostep/index.html)
+- [Generated API docs](https://www.marcoonroad.dev/twostep/apiref/twostep/Twostep/index.html)
 - [Generated API coverage](https://www.marcoonroad.dev/twostep/apicov/index.html)
 
 You can test this library against mobile apps such as Google
@@ -87,7 +85,7 @@ the end user. Your tracking of the OTP code should be a pair
 (if using TOTP algorithm, otherwise nonce will be a HOTP counter)
 and the `otpCode` is verified / checked as valid. Keep in mind that
 you should only track valid / verified OTP codes to not waste storage
-costs with invalid TOTP codes (i.e, codes that can't be exploited by
+costs with invalid OTP codes (i.e, codes that can't be exploited by
 replay attacks).
 
 ---
@@ -100,7 +98,7 @@ teams. As a disclaimer, I'm not responsible for any damages.
 
 ## Tips
 
-For stronger/longer secrets, you can use the `~bytes` optional parameter
+For stronger / longer secrets, you can use the `~bytes` optional parameter
 (the default and minimal value is 10,
 _with the invariant that it must be divisible-by / multiple-of 5_):
 
