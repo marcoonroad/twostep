@@ -64,7 +64,9 @@ module HOTP : sig
     for instance, email inbox messages or the discouraged SMS channel. In other words, where the
     server has full control of OTP token generation and sends it for the end-user through a trusted /
     linked third-party channel. {i Important note:} you must generate a different secret for
-    every linked third-party channel.
+    every linked third-party channel. Also, you should limit the window for user authentication once
+    the token / code is sent on a third-party channel, something like 5 or 10 minutes to expire regarding
+    the third-party channel's delay to receive messages.
   *)
 
   val secret : ?bytes:int -> unit -> string
@@ -103,14 +105,17 @@ module HOTP : sig
     -> bool * int
   (**
     Operation to verify a sequence of codes with optional
-    look-[ahead] parameter (defaults to [0]), [digits] of every HOTP string code
+    look-[ahead] parameter (defaults to [0], a constraint for how much the server's counter can
+    differ from client's counter, so it attempts to sync-in by incrementing the counter),
+    [digits] of every HOTP string code
     (defaults to [6]) and underlying [hash] algorithm for internal HMAC (defaults to
     ["SHA-1"], values ["SHA-256"] and ["SHA-512"] are also accepted). The [secret] parameter
     must be a valid Base-32 secret. The [counter] is a nonce persisted on storage for given
     end-user. A non-empty list of [codes] provided by the client/end-user is a sequence generated
     with counters applied in an incremental way for every code.
     Returns a pair of verification status ([true] or [false]) and a resynchronized next counter to
-    replace the current counter on storage.
+    replace the current counter on storage (only if verification is successful with [true], otherwise
+    the counter is not updated and returns the same counter of operation input).
   *)
 end
 

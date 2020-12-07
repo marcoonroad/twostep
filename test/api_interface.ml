@@ -179,14 +179,14 @@ let __hotp_resynch_case () =
   let secret = HOTP.secret ~bytes:15 () in
   let result = HOTP.verify ~counter:0 ~secret ~codes () in
   check bool "should fail verification flag with false" false @@ fst result ;
-  check int "should increment counter even on failure" 1 @@ snd result ;
+  check int "should not increment counter on failure" 0 @@ snd result ;
   let codes = HOTP.codes ~counter:7 ~amount:3 ~secret () in
   let result = HOTP.verify ~counter:4 ~ahead:6 ~secret ~codes () in
   check bool "should pass verification flag with true" true @@ fst result ;
   check int "should increment counter as next one" 10 @@ snd result ;
   let result = HOTP.verify ~counter:2 ~ahead:4 ~secret ~codes () in
   check bool "should fail verification flag with false" false @@ fst result ;
-  check int "should increment counter even on failure" 5 @@ snd result
+  check int "should not increment counter on failure" 2 @@ snd result
 
 
 let suite =

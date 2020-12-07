@@ -57,7 +57,7 @@ This function assumes the same configuration of `Twostep.TOTP.code`,
 except for the clock drift, where `Twostep.TOTP.verify` assumes too
 past and future 30 seconds (ideal on slow connections or latency
 problems). For the full API reference or coverage status, please refer to:
-- [Generated API docs](https://www.marcoonroad.dev/twostep/apiref/twostep/index.html)
+- [Generated API docs](https://www.marcoonroad.dev/twostep/apiref/twostep/Twostep/index.html)
 - [Generated API coverage](https://www.marcoonroad.dev/twostep/apicov/index.html)
 
 You can test this library against mobile apps such as Google
@@ -79,17 +79,16 @@ during 2-step verification, and after that, erasing the
 password persisted on front (nice UX for the client to not
 type twice her own password).
 
-Also, you should track valid TOTP codes sent from the end user in
+Also, you should track valid OTP codes sent from the end user in
 a persisted storage (such as databases). This is just to avoid
-**replay attacks** once an attacker intercepts a valid TOTP code from
-the end user. Your tracking of the TOTP code should be a pair
-`(otpCode, timeNonce)`, where `timeNone` is the current interval/period
-and the `otpCode` is verified/checked as valid. Keep in mind that
-you should only track valid/verified TOTP codes to not waste storage
+**replay attacks** once an attacker intercepts a valid OTP code from
+the end user. Your tracking of the OTP code should be a pair
+`(otpCode, nonce)`, where `nonce` is the current interval / period
+(if using TOTP algorithm, otherwise nonce will be a HOTP counter)
+and the `otpCode` is verified / checked as valid. Keep in mind that
+you should only track valid / verified OTP codes to not waste storage
 costs with invalid TOTP codes (i.e, codes that can't be exploited by
-replay attacks). This rule only applies for TOTP algorithms, not for
-HOTP algorithms too -- 'cause they have the counter increased even for
-failed verification attempts.
+replay attacks).
 
 ---
 
@@ -103,7 +102,7 @@ teams. As a disclaimer, I'm not responsible for any damages.
 
 For stronger/longer secrets, you can use the `~bytes` optional parameter
 (the default and minimal value is 10,
-_with the invariant that it must be divisible by 5_):
+_with the invariant that it must be divisible-by / multiple-of 5_):
 
 ```ocaml
 let secret: string = Twostep.TOTP.secret ~bytes:20 ();;

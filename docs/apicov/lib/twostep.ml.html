@@ -473,9 +473,9 @@ module HOTP : IHOTP = struct
       then <span data-count="3">p</span>revious
       else <span data-count="11">i</span>f fst current
       then <span data-count="2">c</span>urrent
-      else <span data-count="9">(</span>false, counter + amount)
+      else <span data-count="9">(</span>false, counter)
     in
-    let invalid = (false, counter + amount) in
+    let invalid = (false, counter) in
     Base.List.fold_left results ~init:invalid ~f:folding
 end
 </code></pre>

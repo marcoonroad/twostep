@@ -144,8 +144,8 @@ module HOTP : IHOTP = struct
       then previous
       else if fst current
       then current
-      else (false, counter + amount)
+      else (false, counter)
     in
-    let invalid = (false, counter + amount) in
+    let invalid = (false, counter) in
     Base.List.fold_left results ~init:invalid ~f:folding
 end
