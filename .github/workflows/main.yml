@@ -44,7 +44,7 @@ jobs:
           ocaml-version: ${{ matrix.ocaml-version }}
 
       - run: opam pin add twostep.dev . --no-action
-      - run: opam depext twostep --yes --with-doc --with-test
+#     - run: opam depext twostep --yes --with-doc --with-test
       - run: opam install . --deps-only --with-doc --with-test
       - run: opam exec -- dune build
       - run: opam exec -- dune runtest
