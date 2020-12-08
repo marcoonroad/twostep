@@ -20,7 +20,7 @@ LABEL \
   org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.name="twostep" \
   org.label-schema.description="HOTP and TOTP algorithms for 2-step verification (for OCaml)." \
-  org.label-schema.url="https://marcoonroad.dev/twostep" \
+  org.label-schema.url="https://twostep.marcoonroad.dev" \
   org.label-schema.vcs-ref=$VCS_REF \
   org.label-schema.vcs-url="https://github.com/marcoonroad/twostep" \
   org.label-schema.vendor="Marco Aurélio da Silva (marcoonroad)" \

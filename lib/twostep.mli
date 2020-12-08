@@ -3,6 +3,13 @@
     @version 1.0.0
 *)
 
+(**
+  Pay attention that this library doesn't persist any HOTP counters neither tracks
+  authenticated/verified valid OTP codes to protect against replay attacks. It's
+  all up to you to build such defenses on top of this library with your underlying
+  cloud-provided storage (NoSQL, relational databases, shared filesystems, etc).
+*)
+
 (** Module for TOTP algorithm. *)
 module TOTP : sig
   (**

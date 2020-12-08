@@ -23,7 +23,7 @@ project with OPAM's `pin` command.
 
 The authentication of 2-step verification needs prior known
 and shared secret between the client and server. If no
-secret was send before, you can generate this Base-32 secret
+secret was sent before, you can generate this Base-32 secret
 with:
 
 ```ocaml
@@ -38,14 +38,14 @@ randomness. To generate an OTP code, you can use this function:
 let code: string = Twostep.TOTP.code ~secret:secret ();; (* kinda "098123" *)
 ```
 
-The function above assumes the `SHA-1` hash algorithm, 30 seconds
+The function above assumes the `SHA-1` hash algorithm, `30` seconds
 as timestep/window before refreshed code, `6` digits for output
 number code (padded with zeros on left sometimes) and no clock
-drifts / not-sync time between server and client (that is, no
+drifts / not-sync time between server and client (i.e, no
 30 seconds on the past or on the future).
 
-To verify one-time codes sent from client-side, use the following
-function:
+To verify one-time codes from the client, use the following
+function below:
 
 ```ocaml
 let valid: bool = Twostep.TOTP.verify ~secret:secret ~code:code ();;
@@ -59,8 +59,8 @@ problems). For the full API reference or coverage status, please refer to:
 - [Generated API coverage](https://www.marcoonroad.dev/twostep/apicov/index.html)
 
 You can test this library against mobile apps such as Google
-Authenticator or Microsoft Authenticator without no problems
-(I have tested myself too).
+Authenticator or Microsoft Authenticator without any problems
+(I have tested on both as well).
 
 ## Security Concerns
 
@@ -90,9 +90,10 @@ replay attacks).
 
 ---
 
-This is a warning. Implement such system carefully, and if
-possible, with audits from external experts and security
-teams. As a disclaimer, I'm not responsible for any damages.
+**Important:** This is a warning / security advice. Implement
+such system carefully, and if possible, with audits from external
+experts and security teams. As a disclaimer, I'm not responsible
+for any damages.
 
 ---
 
