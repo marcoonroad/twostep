@@ -1,0 +1,55 @@
+name: Windows CI Workflow
+
+on:
+  push:
+    branches:
+      - stable
+      - development
+  pull_request:
+    branches:
+      - stable
+      - development
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-latest
+        ocaml-version:
+          - 4.03.0
+          - 4.04.0
+          - 4.05.0
+          - 4.06.1
+          - 4.07.1
+          - 4.08.1
+          - 4.09.1
+          - 4.10.1
+          - 4.11.0
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use OCaml ${{ matrix.ocaml-version }}
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: ${{ matrix.ocaml-version }}
+
+      - run: opam pin add twostep.dev . --no-action
+      - run: opam depext twostep --yes --with-test
+      - run: opam install . --deps-only --with-doc --with-test
+      - run: opam exec -- dune build
+      - run: opam exec -- dune runtest
+
+#     - run: make binary
+#     - name: Upload the build artifact
+#       uses: actions/upload-artifact@v2
+#       with:
+#         name: ${{ matrix.os }}-${{ matrix.ocaml-version }}-twostep.exe
+#         path: twostep.exe

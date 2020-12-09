@@ -1,4 +1,4 @@
-name: OCaml Twostep Library CI/CD Workflow
+name: Ubuntu CI Workflow
 
 on:
   push:
@@ -18,9 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - macos-latest
           - ubuntu-latest
-          - windows-latest
         ocaml-version:
           - 4.03.0
           - 4.04.0
