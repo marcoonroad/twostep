@@ -62,7 +62,7 @@ let counter ?(timestep = <span data-count="6">3</span>0) ?(drift = <span data-co
     Base.Int64.( + ) add @@ Base.Int64.( / ) no<span data-count="57">w</span> @@ Base.Int64.of_in<span data-count="57">t</span> timestep
   in
   <span data-count="57">C</span>struct.to_string
-  @@ Nocrypto.Numeric.Z.to_cstruct_be ~size:<span data-count="57">8</span>
+  @@ Mirage_crypto_pk.Z_extra.to_cstruct_be ~size:<span data-count="57">8</span>
   @@ Z.of_int6<span data-count="57">4</span> ctr
 </code></pre>
       </div>

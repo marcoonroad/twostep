@@ -129,7 +129,7 @@ let base32_to_string ?(size = 10) base32 =
   |> Base.List.map ~f:(Helpers.pad ~basis:5 ~direction:Helpers.OnLeft ~byte:'0')
   |> Base.List.reduce_exn ~f:( ^ )
   |> Z.of_string_base 2
-  |> Nocrypto.Numeric.Z.to_cstruct_be ~size
+  |> Mirage_crypto_pk.Z_extra.to_cstruct_be ~size
   |> Cstruct.to_string
 
 

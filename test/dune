@@ -11,4 +11,5 @@
 (test
  (name api_interface)
  (modules api_interface)
- (libraries base nocrypto nocrypto.unix mirage-crypto mirage-crypto-rng mirage-crypto-rng.unix twostep alcotest))
+ (libraries base mirage-crypto mirage-crypto-rng mirage-crypto-rng.unix
+   twostep alcotest))

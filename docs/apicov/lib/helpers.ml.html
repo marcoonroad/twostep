@@ -87,10 +87,10 @@ let pad ~basis ~direction ?(byte = <span data-count="10">_</span>_nullchar) msg 
   <span data-count="1922">l</span>et length = String.length msg in
   <span data-count="1922">l</span>et remainder = length mod basis in
   if remainder = 0
-  then <span data-count="1077">m</span>sg
+  then <span data-count="1032">m</span>sg
   else
-    <span data-count="845">l</span>et zerofill = String.make (basis - remainder) byte in
-    <span data-count="845">m</span>atch direction with <span data-count="5">O</span>nRight -&gt; msg ^ zerofill | <span data-count="840">O</span>nLeft -&gt; zerofill ^ msg
+    <span data-count="890">l</span>et zerofill = String.make (basis - remainder) byte in
+    <span data-count="890">m</span>atch direction with <span data-count="5">O</span>nRight -&gt; msg ^ zerofill | <span data-count="885">O</span>nLeft -&gt; zerofill ^ msg
 </code></pre>
       </div>
     </div>

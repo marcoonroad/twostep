@@ -430,7 +430,7 @@ module HOTP : IHOTP = struct
     <span data-count="43">l</span>et counter = Base.Int64.of_int counter in
     <span data-count="43">l</span>et counter' =
       Cstruct.to_string
-      @@ Nocrypto.Numeric.Z.to_cstruct_be ~size:<span data-count="43">8</span>
+      @@ Mirage_crypto_pk.Z_extra.to_cstruct_be ~size:<span data-count="43">8</span>
       @@ Z.of_int6<span data-count="43">4</span> counter
     in
     <span data-count="43">l</span>et image = Hmac.hmac ~hash ~secret:decoded counter' in

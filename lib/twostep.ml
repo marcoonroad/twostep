@@ -101,7 +101,7 @@ module HOTP : IHOTP = struct
     let counter = Base.Int64.of_int counter in
     let counter' =
       Cstruct.to_string
-      @@ Nocrypto.Numeric.Z.to_cstruct_be ~size:8
+      @@ Mirage_crypto_pk.Z_extra.to_cstruct_be ~size:8
       @@ Z.of_int64 counter
     in
     let image = Hmac.hmac ~hash ~secret:decoded counter' in

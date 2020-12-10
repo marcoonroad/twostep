@@ -9,5 +9,5 @@ let counter ?(timestep = 30) ?(drift = 0) ?(timestamp = __unix_time) () =
     Base.Int64.( + ) add @@ Base.Int64.( / ) now @@ Base.Int64.of_int timestep
   in
   Cstruct.to_string
-  @@ Nocrypto.Numeric.Z.to_cstruct_be ~size:8
+  @@ Mirage_crypto_pk.Z_extra.to_cstruct_be ~size:8
   @@ Z.of_int64 ctr

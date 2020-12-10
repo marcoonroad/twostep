@@ -103,9 +103,9 @@
 <a href="#L38">38</a>
 <a href="#L39">39</a>
 </pre>
-<pre><code class="ocaml">module S1 = Nocrypto.Hash.SHA1
-module S2 = Nocrypto.Hash.SHA256
-module S5 = Nocrypto.Hash.SHA512
+<pre><code class="ocaml">module S1 = Mirage_crypto.Hash.SHA1
+module S2 = Mirage_crypto.Hash.SHA256
+module S5 = Mirage_crypto.Hash.SHA512
 
 let of_string = Cstruct.of_string
 
