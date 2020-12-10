@@ -2,6 +2,10 @@
 
 HOTP and TOTP algorithms for 2-step verification (for OCaml).
 
+![Windows CI Workflow](https://github.com/marcoonroad/twostep/workflows/Windows%20CI%20Workflow/badge.svg)
+![Ubuntu CI Workflow](https://github.com/marcoonroad/twostep/workflows/Ubuntu%20CI%20Workflow/badge.svg)
+![MacOS CI Workflow](https://github.com/marcoonroad/twostep/workflows/MacOS%20CI%20Workflow/badge.svg)
+
 This project implements algorithms for 2-step verification,
 being the HMAC-based One-Time Password
 (see [RFC 4226](https://tools.ietf.org/html/rfc4226)) and the
