@@ -200,5 +200,5 @@ let suite =
 
 
 let () =
-  Nocrypto_entropy_unix.initialize () ;
+  Mirage_crypto_rng_unix.initialize () ;
   run "Twostep tests" [ ("test suite", suite) ]

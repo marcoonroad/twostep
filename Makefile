@@ -16,6 +16,9 @@ deps:
 pin:
 	@ opam pin add twostep . -n --yes
 
+unpin:
+	@ opam pin remove twostep --yes
+
 utop: build
 	@ dune utop lib
 

@@ -4,4 +4,4 @@
  (synopsis "HOTP and TOTP algorithms for 2-step verification (for OCaml)")
  (preprocess
   (pps bisect_ppx -- -conditional))
- (libraries base hex nocrypto nocrypto.unix bisect_ppx))
+ (libraries base hex nocrypto nocrypto.unix mirage-crypto mirage-crypto-rng mirage-crypto-rng.unix bisect_ppx))

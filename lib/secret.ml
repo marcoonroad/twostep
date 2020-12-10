@@ -1,24 +1,10 @@
-module RngZ = Nocrypto.Rng.Z
-module NumZ = Nocrypto.Numeric.Z
-
-let __gen_min bits = "1" ^ Base.String.init (bits - 1) ~f:(function _ -> '0')
-
-let __gen_max bits = Base.String.init bits ~f:(function _ -> '1')
-
-let __max_bits bits = Z.of_string_base 2 @@ __gen_max bits
-
-let __min_bits bits = Z.of_string_base 2 @@ __gen_min bits
-
-let __random_bits bits =
-  let _min_random = __min_bits bits in
-  let _max_random = __max_bits bits in
-  NumZ.to_cstruct_be @@ RngZ.gen_r _min_random _max_random
-
+let __random_bytes bytes =
+  Mirage_crypto_rng.generate bytes
 
 let generate ~bytes () =
   if bytes >= 10 && bytes mod 5 == 0
   then
-    Base32.string_to_base32 @@ Cstruct.to_string @@ __random_bits @@ (8 * bytes)
+    Base32.string_to_base32 @@ Cstruct.to_string @@ __random_bytes bytes
   else
     failwith
       ( "Invalid amount of bytes ("
@@ -26,4 +12,4 @@ let generate ~bytes () =
       ^ ") for secret, it must be at least 10 and divisible by 5!" )
 
 
-let _ = Nocrypto_entropy_unix.initialize ()
+let _ = Mirage_crypto_rng_unix.initialize ()
