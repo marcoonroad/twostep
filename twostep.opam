@@ -26,6 +26,7 @@ depends: [
   "hex" {>= "1.2.0"}
   "mirage-crypto" {>= "0.6.1"}
   "mirage-crypto-rng" {>= "0.6.1"}
+  "mirage-crypto-pk" {>= "0.6.1"}
   "dune" {build & >= "1.6.2"}
   "cmdliner" {>= "1.0.2"}
   "bisect_ppx" {>= "1.4.0"}
