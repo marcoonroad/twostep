@@ -20,8 +20,7 @@ jobs:
         os:
           - ubuntu-latest
         ocaml-version:
-          - 4.07.0
-          - 4.07.1
+          - 4.08.0
           - 4.08.1
           - 4.09.1
           - 4.10.1
