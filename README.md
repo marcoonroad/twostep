@@ -2,9 +2,23 @@
 
 HOTP and TOTP algorithms for 2-step verification (for OCaml).
 
-![Windows CI Workflow](https://github.com/marcoonroad/twostep/workflows/Windows%20CI%20Workflow/badge.svg)
-![Ubuntu CI Workflow](https://github.com/marcoonroad/twostep/workflows/Ubuntu%20CI%20Workflow/badge.svg)
-![MacOS CI Workflow](https://github.com/marcoonroad/twostep/workflows/MacOS%20CI%20Workflow/badge.svg)
+<p>
+<a target="_blank" href="https://github.com/marcoonroad/twostep/blob/stable/twostep.opam">
+<img src="https://img.shields.io/static/v1?label=OCaml&message=%2Bv4.08.0&color=orange&style=flat-square&logo=ocaml"/>
+</a>
+<a target="_blank" href="https://github.com/marcoonroad/twostep/actions?query=workflow%3A%22Ubuntu+CI+Workflow%22+branch%3Astable">
+<img alt="Ubuntu Workflow Status" src="https://img.shields.io/github/workflow/status/marcoonroad/twostep/Ubuntu%20CI%20Workflow/stable?label=Ubuntu&logo=github&style=flat-square"/>
+</a>
+<a target="_blank" href="https://github.com/marcoonroad/twostep/actions?query=workflow%3A%22Windows+CI+Workflow%22+branch%3Astable">
+<img alt="Windows Workflow Status" src="https://img.shields.io/github/workflow/status/marcoonroad/twostep/Windows%20CI%20Workflow/stable?label=Windows&logo=github&style=flat-square"/>
+</a>
+<a target="_blank" href="https://github.com/marcoonroad/twostep/actions?query=workflow%3A%22MacOS+CI+Workflow%22+branch%3Astable">
+<img alt="MacOS Workflow Status" src="https://img.shields.io/github/workflow/status/marcoonroad/twostep/MacOS%20CI%20Workflow/stable?label=MacOS&logo=github&style=flat-square"/>
+</a>
+<a target="_blank" href="https://github.com/marcoonroad/twostep/blob/stable/LICENSE">
+<img alt="Project License" src="https://img.shields.io/github/license/marcoonroad/twostep?label=License&logo=github&style=flat-square">
+</a>
+</p>
 
 This project implements algorithms for 2-step verification,
 being the HMAC-based One-Time Password
