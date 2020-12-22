@@ -72,6 +72,9 @@ docs: build
 	@ make docs-index
 	@ mv ./_build/default/_doc/_html/* ./docs/apiref/
 
+serve-docs: docs
+	@ cd docs && bundle exec jekyll serve && cd .. || cd ..
+
 install: build
 	@ dune install
 

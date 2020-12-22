@@ -3,20 +3,32 @@
 HOTP and TOTP algorithms for 2-step verification (for OCaml).
 
 <p>
-<a target="_blank" href="https://github.com/marcoonroad/twostep/blob/stable/twostep.opam">
-<img src="https://img.shields.io/static/v1?label=OCaml&message=%2Bv4.08.0&color=orange&style=flat-square&logo=ocaml"/>
-</a>
-<a target="_blank" href="https://github.com/marcoonroad/twostep/actions?query=workflow%3A%22Ubuntu+CI+Workflow%22+branch%3Astable">
-<img alt="Ubuntu Workflow Status" src="https://img.shields.io/github/workflow/status/marcoonroad/twostep/Ubuntu%20CI%20Workflow/stable?label=Ubuntu&logo=github&style=flat-square"/>
-</a>
-<a target="_blank" href="https://github.com/marcoonroad/twostep/actions?query=workflow%3A%22Windows+CI+Workflow%22+branch%3Astable">
-<img alt="Windows Workflow Status" src="https://img.shields.io/github/workflow/status/marcoonroad/twostep/Windows%20CI%20Workflow/stable?label=Windows&logo=github&style=flat-square"/>
-</a>
-<a target="_blank" href="https://github.com/marcoonroad/twostep/actions?query=workflow%3A%22MacOS+CI+Workflow%22+branch%3Astable">
-<img alt="MacOS Workflow Status" src="https://img.shields.io/github/workflow/status/marcoonroad/twostep/MacOS%20CI%20Workflow/stable?label=MacOS&logo=github&style=flat-square"/>
-</a>
-<a target="_blank" href="https://github.com/marcoonroad/twostep/blob/stable/LICENSE">
-<img alt="Project License" src="https://img.shields.io/github/license/marcoonroad/twostep?label=License&logo=github&style=flat-square">
+<style>
+a.badge-link {
+  text-decoration: none;
+}
+a.badge-link:hover {
+  text-decoration: none;
+}
+span.badge-separator {
+  content: "";
+  display: inline-block;
+}
+</style>
+<a target="_blank" class="badge-link" href="https://github.com/marcoonroad/twostep/blob/stable/twostep.opam">
+<img src="https://img.shields.io/static/v1?label=OCaml&message=%2Bv4.08.0&color=orange&style=flat-square&logo=ocaml" />
+</a><span class="badge-separator"></span>
+<a target="_blank" class="badge-link" href="https://github.com/marcoonroad/twostep/actions?query=workflow%3A%22Ubuntu+CI+Workflow%22+branch%3Astable">
+<img alt="Ubuntu Workflow Status" src="https://img.shields.io/github/workflow/status/marcoonroad/twostep/Ubuntu%20CI%20Workflow/stable?label=Ubuntu&logo=github&style=flat-square" />
+</a><span class="badge-separator"></span>
+<a target="_blank" class="badge-link" href="https://github.com/marcoonroad/twostep/actions?query=workflow%3A%22Windows+CI+Workflow%22+branch%3Astable">
+<img alt="Windows Workflow Status" src="https://img.shields.io/github/workflow/status/marcoonroad/twostep/Windows%20CI%20Workflow/stable?label=Windows&logo=github&style=flat-square" />
+</a><span class="badge-separator"></span>
+<a target="_blank" class="badge-link" href="https://github.com/marcoonroad/twostep/actions?query=workflow%3A%22MacOS+CI+Workflow%22+branch%3Astable">
+<img alt="MacOS Workflow Status" src="https://img.shields.io/github/workflow/status/marcoonroad/twostep/MacOS%20CI%20Workflow/stable?label=MacOS&logo=github&style=flat-square" />
+</a><span class="badge-separator"></span>
+<a target="_blank" class="badge-link" href="https://github.com/marcoonroad/twostep/blob/stable/LICENSE">
+<img alt="Project License" src="https://img.shields.io/github/license/marcoonroad/twostep?label=License&logo=github&style=flat-square" />
 </a>
 </p>
 
@@ -78,7 +90,11 @@ problems). For the full API reference or coverage status, please refer to:
 
 You can test this library against mobile apps such as Google
 Authenticator or Microsoft Authenticator without any problems
-(I have tested on both as well).
+(I have tested on both as well). On any doubts to generate
+a QR-code for the base-32 secret, please refer to Google
+Authenticator's Key Uri Format (for the proper data format
+on QR-code encoding/decoding):
+- [Key Uri Format](https://github.com/google/google-authenticator/wiki/Key-Uri-Format)
 
 ## Security Concerns
 
@@ -87,13 +103,25 @@ client in a secure channel, such as **HTTPS/TLS**, and must
 be stored encrypted in your servers' databases. A good
 approach is to encrypt with a KDF on the client password,
 after you checking the client password against the strongly
-hashed version on database (prefer 512-bits hash algorithms
+hashed version on database (prefer 256/512-bits hash algorithms
 whenever possible, and a KDF in front of this with server's
 salt is ideal too). So, in this approach the front app must
 send the client password twice, during authentication and
 during 2-step verification, and after that, erasing the
 password persisted on front (nice UX for the client to not
 type twice her own password).
+
+It's recommended for the OTP authentication to be optional on
+most cases. The end-user can opt-in this feature some time later,
+and on OTP service setup, she needs to _confirm_ that have
+configured things properly through the _first-time_ OTP-code
+verification. For the first-time, which means no OTP-prompt-prior-login
+until customer confirmation of first-time, you could use
+a `confirmed` boolean (initially `false`) column aside
+`encryptedSecret` on your storage -- so this first-time confirmation
+changes `confirmed` to `true` and then all logins would request an
+OTP code together. Keep in mind that it's just a design sketch of
+implementation, more like an idea than actual RFC recommendation.
 
 Also, you should track valid OTP codes sent from the end user in
 a persisted storage (such as databases). This is just to avoid
@@ -104,7 +132,9 @@ the end user. Your tracking of the OTP code should be a pair
 and the `otpCode` is verified / checked as valid. Keep in mind that
 you should only track valid / verified OTP codes to not waste storage
 costs with invalid OTP codes (i.e, codes that can't be exploited by
-replay attacks).
+replay attacks). After such tracked pairs hit OTP expiration and are
+not able to be exploited anymore, you can clean them from the
+underlying tracklist storage without problems.
 
 ---
 
