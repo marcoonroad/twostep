@@ -8,8 +8,8 @@ HMAC-based One-Time Password (RFC4226) and the Time-based One-Time Password
 (RFC 6238).
 """
 license: "MIT"
-maintainer: "marcoonroad@gmail.com"
-authors: ["Marco Aurélio da Silva"]
+maintainer: "Marco Aurélio da Silva <marcoonroad@gmail.com>"
+authors: ["Marco Aurélio da Silva <marcoonroad@gmail.com>"]
 homepage: "https://github.com/marcoonroad/twostep"
 bug-reports: "https://github.com/marcoonroad/twostep/issues"
 dev-repo: "git+https://github.com/marcoonroad/twostep.git"
@@ -27,7 +27,7 @@ depends: [
   "mirage-crypto" {>= "0.6.1"}
   "mirage-crypto-rng" {>= "0.6.1"}
   "mirage-crypto-pk" {>= "0.6.1"}
-  "dune" {build & >= "1.6.2"}
+  "dune" {build & >= "1.7.0"}
   "cmdliner" {>= "1.0.2"}
-  "alcotest" {>= "0.8.4"}
+  "alcotest" {with-test & >= "0.8.4"}
 ]
