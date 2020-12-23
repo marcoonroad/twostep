@@ -3,8 +3,6 @@ _build/
 *.swp
 dune-workspace
 coverage/
-bisect*.out
-bisect*.coverage
 docs/_site
 docs/vendor/bundle
 ./twostep.exe
