@@ -44,13 +44,7 @@ jobs:
       - run: opam depext twostep --yes --with-test
       - run: opam install . --deps-only --with-doc --with-test
       - run: opam exec -- dune build
-      - run: opam install ocamlformat --yes
+      - run: opam exec -- dune runtest
+      - run: opam install ocamlformat.0.15.1 --yes
       - run: opam exec -- dune build @fmt
       - run: opam exec -- dune runtest
-
-#     - run: make binary
-#     - name: Upload the build artifact
-#       uses: actions/upload-artifact@v2
-#       with:
-#         name: ${{ matrix.os }}-${{ matrix.ocaml-version }}-twostep.exe
-#         path: twostep.exe
