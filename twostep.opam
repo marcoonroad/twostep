@@ -15,10 +15,14 @@ bug-reports: "https://github.com/marcoonroad/twostep/issues"
 dev-repo: "git+https://github.com/marcoonroad/twostep.git"
 
 build: [
+  ["dune" "build" "@check" "-p" name "-j" jobs]
   ["dune" "build" "-p" name "-j" jobs]
 ]
 
-run-test: ["dune" "runtest" "-p" name "-j" jobs]
+run-test: [
+  ["dune" "build" "@fmt" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs]
+]
 
 depends: [
   "ocaml" {>= "4.08.0"}
@@ -27,7 +31,8 @@ depends: [
   "mirage-crypto" {>= "0.6.1"}
   "mirage-crypto-rng" {>= "0.6.1"}
   "mirage-crypto-pk" {>= "0.6.1"}
-  "dune" {build & >= "1.6.2"}
-  "bisect_ppx" {>= "1.4.0"}
+  "dune" {build & >= "1.7.0"}
+  "bisect_ppx" {dev & >= "2.0.0"}
   "alcotest" {with-test & >= "0.8.4"}
+  "ocamlformat" {with-test & >= "0.15.0"}
 ]

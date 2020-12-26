@@ -9,4 +9,4 @@
   (ocamlopt_flags
    (:standard -O3))))
 
-(ignored_subdirs (docs TRASH))
+(dirs :standard \ docs TRASH)

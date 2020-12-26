@@ -114,11 +114,6 @@ module HOTP : IHOTP = struct
     Base.List.init amount ~f:step
 
 
-  (*
-  let check ~digits ~hash ~counter ~secret ~code:number () =
-    number = code ~digits ~hash ~counter ~secret ()
-  *)
-
   let verify
       ?(digits = 6)
       ?(hash = "SHA-1")

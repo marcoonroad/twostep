@@ -1,15 +1,122 @@
+:root, .light:root {
+    --main-background: #fff;
+    --code-background: transparent;
+    --line-numbers-background: rgba(0, 0, 0, 0.025);
+    --navbar-background: #eee;
+
+    --meter-unvisited-color: #f9c3c3;
+    --meter-visited-color: #9ed09f;
+    --meter-separator-color: white;
+
+    --color: #000;
+    --dirname-color: #bbb;
+    --underline-color: #ddd;
+    --visited-color: #eaffea;
+    --visited-number-color: rgba(64, 192, 64, 0.2);
+    --unvisited-color: #ffecec;
+    --unvisited-number-color: rgba(255, 128, 128, 0.3);
+    --somevisited-color: #ffd;
+    --highlight-color: #a0fbff;
+    --line-number-color: rgba(0, 0, 0, 0.4);
+    --unvisited-margin-color: #d69e9e;
+    --border: #eee;
+    --navbar-border: #ddd;
+    --code-color: #000;
+    --hljs-link: #6a737d;
+    --hljs-keyword: #d73a49;
+    --hljs-regexp: #032f62;
+    --hljs-title: #900;
+    --hljs-type: #6f42c1;
+    --hljs-meta: #22863a;
+    --hljs-variable: #005cc5;
+}
+
+.dark:root {
+    --main-background: #202020;
+    --code-background: #222;
+    --line-numbers-background: rgba(0, 0, 0, 0.125);
+    --navbar-background: #202020;
+
+    --meter-unvisited-color: #622;
+    --meter-visited-color: #252;
+    --meter-separator-color: black;
+
+    --color: #bebebe;
+    --dirname-color: #666;
+    --underline-color: #444;
+    --visited-color: #002800;
+    --visited-number-color: #252;
+    --unvisited-color: #380000;
+    --unvisited-number-color: #622;
+    --somevisited-color: #303000;
+    --highlight-color: #303e3f;
+    --line-number-color: rgba(230, 230, 230, 0.3);
+    --unvisited-margin-color: #622;
+    --border: #333;
+    --navbar-border: #333;
+    --code-color: #ccc;
+    --hljs-link: #999;
+    --hljs-keyword: #cda869;
+    --hljs-regexp: #f9ee98;
+    --hljs-title: #dcdcaa;
+    --hljs-type: #ac885b;
+    --hljs-meta: #82aaff;
+    --hljs-variable: #cf6a4c;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --main-background: #202020;
+        --code-background: #222;
+        --line-numbers-background: rgba(0, 0, 0, 0.125);
+        --navbar-background: #202020;
+
+        --meter-unvisited-color: #622;
+        --meter-visited-color: #252;
+        --meter-separator-color: black;
+
+        --color: #bebebe;
+        --dirname-color: #666;
+        --underline-color: #444;
+        --visited-color: #002800;
+        --visited-number-color: #252;
+        --unvisited-color: #380000;
+        --unvisited-number-color: #622;
+        --somevisited-color: #303000;
+        --highlight-color: #303e3f;
+        --line-number-color: rgba(230, 230, 230, 0.3);
+        --unvisited-margin-color: #622;
+        --border: #333;
+        --navbar-border: #333;
+        --code-color: #ccc;
+        --hljs-link: #999;
+        --hljs-keyword: #cda869;
+        --hljs-regexp: #f9ee98;
+        --hljs-title: #dcdcaa;
+        --hljs-type: #ac885b;
+        --hljs-meta: #82aaff;
+        --hljs-variable: #cf6a4c;
+    }
+}
+
 body {
     margin: 0;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     line-height: 1.5em;
+    background-color: var(--main-background);
 }
 
 pre {
     margin: 0;
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
     font-size: 13px;
-    color: black;
+    color: var(--code-color);
+    cursor: text;
+}
+
+code {
+    font-family: inherit;
 }
 
 a {
@@ -22,7 +129,7 @@ a:visited {
 }
 
 #header {
-    color: #555;
+    color: var(--color);
 }
 
 h1 {
@@ -31,7 +138,7 @@ h1 {
 }
 
 .dirname {
-    color: #bbb;
+    color: var(--dirname-color);
 }
 
 h2 {
@@ -61,8 +168,8 @@ h2 {
     left: 0;
     width: 1em;
     height: 100%;
-    background-color: #eee;
-    border-right: 1px solid #ddd;
+    background-color: var(--navbar-background);
+    border-right: 1px solid var(--navbar-border);
     cursor: pointer;
 }
 
@@ -74,12 +181,12 @@ h2 {
 }
 
 #navbar .unvisited, #navbar .some-visited {
-    background-color: #d69e9e;
+    background-color: var(--unvisited-margin-color);
 }
 
 #report {
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     overflow: hidden;
 }
 
@@ -87,6 +194,7 @@ h2 {
     position: absolute;
     z-index: -100;
     width: 100%;
+    background-color: var(--code-background);
 }
 
 #lines-layer span {
@@ -101,15 +209,15 @@ a[id] {
 }
 
 #lines-layer .unvisited {
-    background-color: #ffecec;
+    background-color: var(--unvisited-color);
 }
 
 #lines-layer .visited {
-    background-color: #eaffea;
+    background-color: var(--visited-color);
 }
 
 #lines-layer .some-visited {
-    background-color: #ffd;
+    background-color: var(--somevisited-color);
 }
 
 a[id]:target + span {
@@ -141,91 +249,91 @@ a[id]:target + .some-visited {
 }
 
 @-webkit-keyframes highlight-blank {
-    from { background-color: #a0fbff; }
+    from { background-color: var(--highlight-color); }
     to { background-color: transparent; }
 }
 
 @-moz-keyframes highlight-blank {
-    from { background-color: #a0fbff; }
+    from { background-color: var(--highlight-color); }
     to { background-color: transparent; }
 }
 
 @-o-keyframes highlight-blank {
-    from { background-color: #a0fbff; }
+    from { background-color: var(--highlight-color); }
     to { background-color: transparent; }
 }
 
 @keyframes highlight-blank {
-    from { background-color: #a0fbff; }
+    from { background-color: var(--highlight-color); }
     to { background-color: transparent; }
 }
 
 @-webkit-keyframes highlight-unvisited {
-    from { background-color: #a0fbff; }
-    to { background-color: #ffecec; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--unvisited-color); }
 }
 
 @-moz-keyframes highlight-unvisited {
-    from { background-color: #a0fbff; }
-    to { background-color: #ffecec; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--unvisited-color); }
 }
 
 @-o-keyframes highlight-unvisited {
-    from { background-color: #a0fbff; }
-    to { background-color: #ffecec; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--unvisited-color); }
 }
 
 @keyframes highlight-unvisited {
-    from { background-color: #a0fbff; }
-    to { background-color: #ffecec; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--unvisited-color); }
 }
 
 @-webkit-keyframes highlight-visited {
-    from { background-color: #a0fbff; }
-    to { background-color: #eaffea; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--visited-color); }
 }
 
 @-moz-keyframes highlight-visited {
-    from { background-color: #a0fbff; }
-    to { background-color: #eaffea; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--visited-color); }
 }
 
 @-o-keyframes highlight-visited {
-    from { background-color: #a0fbff; }
-    to { background-color: #eaffea; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--visited-color); }
 }
 
 @keyframes highlight-visited {
-    from { background-color: #a0fbff; }
-    to { background-color: #eaffea; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--visited-color); }
 }
 
 @-webkit-keyframes highlight-some-visited {
-    from { background-color: #a0fbff; }
-    to { background-color: #ffd; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--somevisited-color); }
 }
 
 @-moz-keyframes highlight-some-visited {
-    from { background-color: #a0fbff; }
-    to { background-color: #ffd; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--somevisited-color); }
 }
 
 @-o-keyframes highlight-some-visited {
-    from { background-color: #a0fbff; }
-    to { background-color: #ffd; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--somevisited-color); }
 }
 
 @keyframes highlight-some-visited {
-    from { background-color: #a0fbff; }
-    to { background-color: #ffd; }
+    from { background-color: var(--highlight-color); }
+    to { background-color: var(--somevisited-color); }
 }
 
 #line-numbers {
     float: left;
-    border-right: 1px solid #eee;
+    border-right: 1px solid var(--border);
     margin-right: 1em;
-    color: rgba(0, 0, 0, 0.4);
-    background-color: rgba(0, 0, 0, 0.0125);
+    color: var(--line-number-color);
+    background-color: var(--line-numbers-background);
     text-align: right;
 }
 
@@ -234,29 +342,25 @@ a[id]:target + .some-visited {
     padding-left: 2.35em;
     padding-right: 1em;
     text-decoration: none;
-    color: inherit;
+    color: var(--line-number-color);
 }
 
 #line-numbers .unvisited {
-    background-color: rgba(255, 0, 0, 0.2);
+    background-color: var(--unvisted-number-color);
 }
 
 #line-numbers .visited {
-    background-color: rgba(0, 255, 0, 0.2);
-}
-
-code span {
-    cursor: default;
+    background-color: var(--visted-number-color);
 }
 
 code span[data-count] {
     display: inline-block;
-    background-color: rgba(64, 192, 64, 0.2);
+    background-color: var(--visited-number-color);
 }
 
 code span[data-count="0"] {
     display: inline-block;
-    background-color: rgba(255, 128, 128, 0.3);
+    background-color: var(--unvisited-number-color);
 }
 
 #tool-tip {
@@ -273,43 +377,46 @@ code span[data-count="0"] {
 
 #files {
     padding: 1.5em 4em;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
+    background-color: var(--code-background);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
 }
 
 .meter {
     display: inline-block;
     position: relative;
-    top: 2px;
+    top: 3px;
     width: 5em;
     height: 1em;
-    background-color: #f9c3c3;
+    background-color: var(--meter-unvisited-color);
 }
 
 .covered {
     display: inline-block;
+    position: absolute;
     width: 50%;
     height: 100%;
-    background-color: #9ed09f;
-    border-right: 1px solid white;
+    background-color: var(--meter-visited-color);
+    border-right: 1px solid var(--meter-separator-color);
 }
 
 .percentage {
     display: inline-block;
     width: 4em;
     font-size: 90%;
+    color: var(--color);
 }
 
 #files a {
     text-decoration: none;
-    border-bottom: 1px solid #ddd;
-    color: inherit;
+    border-bottom: 1px solid var(--underline-color);
+    color: var(--color);
 }
 
 .hljs-link,
 .hljs-comment,
 .hljs-quote {
-    color: #6a737d;
+    color: var(--hljs-link);
 }
 
 .hljs-built_in,
@@ -317,7 +424,7 @@ code span[data-count="0"] {
 .hljs-keyword,
 .hljs-selector-tag,
 .hljs-subst {
-    color: #d73a49;
+    color: var(--hljs-keyword);
 }
 
 .hljs-number,
@@ -325,30 +432,29 @@ code span[data-count="0"] {
 .hljs-variable,
 .hljs-template-variable,
 .hljs-tag .hljs-attr {
-    color: #005cc5;
+    color: var(--hljs-variable);
 }
 
 .hljs-regexp,
 .hljs-string,
 .hljs-doctag {
-    color: #032f62;
+    color: var(--hljs-regexp);
 }
 
 .hljs-title,
 .hljs-section,
 .hljs-selector-id {
-    color: #900;
+    color: var(--hljs-title);
 }
 
 .hljs-type,
 .hljs-class .hljs-title {
-    color: #6f42c1;
+    color: var(--hljs-type);
 }
 
 .hljs-meta,
 .hljs-tag,
 .hljs-name,
 .hljs-attribute {
-    color: #22863a;
+    color: var(--hljs-meta);
 }
-
