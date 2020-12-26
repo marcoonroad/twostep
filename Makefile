@@ -1,27 +1,32 @@
-.PHONY: clean dev-deps deps lint-format lint format docs uninstall
-
 all: build
 
+.PHONY: clear
 clear: clean
 
 build:
 	@ dune build
 
+.PHONY: dev-deps
 dev-deps:
-	@ opam install ocamlformat odoc merlin utop ocp-indent --yes
+	@ opam install ocamlformat.0.15.1 odoc merlin utop ocp-indent --yes
 
+.PHONY: deps
 deps:
 	@ opam install . --deps-only
 
+.PHONY: pin
 pin:
 	@ opam pin add twostep . -n --yes
 
+.PHONY: unpin
 unpin:
 	@ opam pin remove twostep --yes
 
+.PHONY: utop
 utop: build
 	@ dune utop lib
 
+.PHONY: cleanup-files
 cleanup-files:
 	@ rm -f *~
 	@ rm -f bin/*~
@@ -34,17 +39,21 @@ cleanup-files:
 	@ rm -f `find . -name 'bisect*.out'`
 	@ rm -f `find . -name 'bisect*.coverage'`
 
+.PHONY: clean
 clean: cleanup-files
 	@ dune clean
 
+.PHONY: lint-format
 lint-format:
 	@ opam install ocamlformat --yes
 	@ dune build @fmt
 
+.PHONY: lint
 lint:
 	@ opam lint
 	@ make lint-format
 
+.PHONY: format
 format:
 	@ opam install ocamlformat --yes
 	@ dune build @fmt --auto-promote || echo "\nSource code rewritten by format.\n"
@@ -55,15 +64,11 @@ quick-test: build
 test: build
 	@ dune runtest --no-buffer -f -j 1
 
-# to run inside docker alpine context
-binary: clear
-	@ dune build --profile deploy
-	@ cp `dune exec --profile deploy -- which twostep` ./twostep.exe
-	@ chmod a+rx ./twostep.exe
-
+.PHONY: docs-index
 docs-index:
 	@ cp README.md docs/index.md
 
+.PHONY: docs
 docs: build
 	@ mkdir -p docs/
 	@ rm -rf docs/apiref/
@@ -72,12 +77,14 @@ docs: build
 	@ make docs-index
 	@ mv ./_build/default/_doc/_html/* ./docs/apiref/
 
+.PHONY: serve-docs
 serve-docs: docs
 	@ cd docs && bundle exec jekyll serve && cd .. || cd ..
 
 install: build
 	@ dune install
 
+.PHONY: uninstall
 uninstall:
 	@ dune uninstall
 

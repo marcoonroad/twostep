@@ -1,0 +1,40 @@
+name: Coverage Report Workflow
+
+on:
+  push:
+    branches:
+      - stable
+      - development
+  pull_request:
+    branches:
+      - stable
+      - development
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Coverage report
+        uses: avsm/setup-ocaml@v1
+        with:
+          ocaml-version: 4.08.1
+      - run: opam pin add twostep.dev . --no-action
+      - run: opam depext twostep --yes --with-test
+      - run: opam install . --deps-only --with-doc --with-test
+      - run: opam exec -- dune build
+        env:
+          BISECT_ENABLE: yes
+      - run: opam exec -- dune runtest
+        env:
+          BISECT_ENABLE: yes
+      - run: opam exec -- bisect-ppx-report -I _build/default/ -text - `find . -name 'bisect*.out'`
+      - run: opam exec -- bisect-ppx-report send-to Coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULL_REQUEST_NUMBER: ${{ github.event.number }}
+      - run: opam install ocamlformat.0.15.1 --yes
+      - run: opam exec -- dune build @fmt
+      - run: opam exec -- dune runtest
