@@ -3,7 +3,9 @@ _build/
 *.swp
 dune-workspace
 coverage/
+_coverage/
 docs/_site
 docs/vendor/bundle
 ./twostep.exe
 ./twostep.install
+.ocamlinit
