@@ -16,7 +16,10 @@ HOTP and TOTP algorithms for 2-step verification (for OCaml).
 <img alt="MacOS Workflow Status" src="https://img.shields.io/github/workflow/status/marcoonroad/twostep/MacOS%20CI%20Workflow/stable?label=MacOS&logo=github&style=flat-square" />
 </a>
 <a target="_blank" href="https://github.com/marcoonroad/twostep/blob/stable/LICENSE">
-<img alt="Project License" src="https://img.shields.io/github/license/marcoonroad/twostep?label=License&logo=github&style=flat-square" />
+<img alt="Project License" src="https://img.shields.io/github/license/marcoonroad/twostep?label=License&logo=github&style=flat-square&color=blue" />
+</a>
+<a target="_blank" href="https://coveralls.io/github/marcoonroad/twostep">
+<img alt="Coverage Status" src="https://img.shields.io/coveralls/github/marcoonroad/twostep?label=Coverage&logo=coveralls&style=flat-square" />
 </a>
 </p>
 
