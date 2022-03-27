@@ -439,88 +439,88 @@
 
 
 let reverse_base32_alphabet = function
-  | <span data-count="97">'</span>a' -&gt;
+  | <span data-count="32">'</span>a' -&gt;
       0
-  | <span data-count="50">'</span>b' -&gt;
+  | <span data-count="17">'</span>b' -&gt;
       1
-  | <span data-count="57">'</span>c' -&gt;
+  | <span data-count="2">'</span>c' -&gt;
       2
-  | <span data-count="57">'</span>d' -&gt;
+  | <span data-count="60">'</span>d' -&gt;
       3
-  | <span data-count="20">'</span>e' -&gt;
+  | <span data-count="53">'</span>e' -&gt;
       4
-  | <span data-count="37">'</span>f' -&gt;
+  | <span data-count="68">'</span>f' -&gt;
       5
-  | <span data-count="105">'</span>g' -&gt;
+  | <span data-count="49">'</span>g' -&gt;
       6
-  | <span data-count="114">'</span>h' -&gt;
+  | <span data-count="16">'</span>h' -&gt;
       7
-  | <span data-count="74">'</span>i' -&gt;
+  | <span data-count="19">'</span>i' -&gt;
       8
-  | <span data-count="16">'</span>j' -&gt;
+  | <span data-count="56">'</span>j' -&gt;
       9
-  | <span data-count="62">'</span>k' -&gt;
+  | <span data-count="44">'</span>k' -&gt;
       10
   | <span data-count="59">'</span>l' -&gt;
       11
-  | <span data-count="22">'</span>m' -&gt;
+  | <span data-count="74">'</span>m' -&gt;
       12
-  | <span data-count="56">'</span>n' -&gt;
+  | <span data-count="105">'</span>n' -&gt;
       13
-  | <span data-count="16">'</span>o' -&gt;
+  | <span data-count="71">'</span>o' -&gt;
       14
-  | <span data-count="62">'</span>p' -&gt;
+  | <span data-count="68">'</span>p' -&gt;
       15
-  | <span data-count="68">'</span>q' -&gt;
+  | <span data-count="56">'</span>q' -&gt;
       16
-  | <span data-count="13">'</span>r' -&gt;
+  | <span data-count="25">'</span>r' -&gt;
       17
-  | <span data-count="16">'</span>s' -&gt;
+  | <span data-count="34">'</span>s' -&gt;
       18
-  | <span data-count="44">'</span>t' -&gt;
+  | <span data-count="124">'</span>t' -&gt;
       19
-  | <span data-count="77">'</span>u' -&gt;
+  | <span data-count="68">'</span>u' -&gt;
       20
-  | <span data-count="56">'</span>v' -&gt;
+  | <span data-count="77">'</span>v' -&gt;
       21
-  | <span data-count="56">'</span>w' -&gt;
+  | <span data-count="87">'</span>w' -&gt;
       22
-  | <span data-count="62">'</span>x' -&gt;
+  | <span data-count="7">'</span>x' -&gt;
       23
-  | <span data-count="71">'</span>y' -&gt;
+  | <span data-count="44">'</span>y' -&gt;
       24
-  | <span data-count="71">'</span>z' -&gt;
+  | <span data-count="59">'</span>z' -&gt;
       25
-  | <span data-count="43">'</span>2' -&gt;
+  | <span data-count="34">'</span>2' -&gt;
       26
-  | <span data-count="31">'</span>3' -&gt;
+  | <span data-count="68">'</span>3' -&gt;
       27
-  | <span data-count="4">'</span>4' -&gt;
+  | <span data-count="84">'</span>4' -&gt;
       28
-  | <span data-count="7">'</span>5' -&gt;
+  | <span data-count="25">'</span>5' -&gt;
       29
-  | <span data-count="16">'</span>6' -&gt;
+  | <span data-count="10">'</span>6' -&gt;
       30
-  | <span data-count="130">'</span>7' -&gt;
+  | <span data-count="74">'</span>7' -&gt;
       31
   | <span data-count="1">w</span>at -&gt;
       failwith ("Invalid base32 character: " ^ Base.String.of_cha<span data-count="1">r</span> wat)
 
 
 let rec enc_loop data ~basis ~alphabet number =
-  <span data-count="8828">i</span>f number &lt;= 0
-  then <span data-count="1638">d</span>ata
+  <span data-count="9614">i</span>f number &lt;= 0
+  then <span data-count="1737">d</span>ata
   else
-    <span data-count="7190">l</span>et remainder = number mod basis in
+    <span data-count="7877">l</span>et remainder = number mod basis in
     let result = number / basis in
     let digit = List.nth alphabet remainder in
-    <span data-count="7190">e</span>nc_loop (digit ^ data) ~basis ~alphabet result
+    <span data-count="7877">e</span>nc_loop (digit ^ data) ~basis ~alphabet result
 
 
 let int_to_base_x ~basis ~alphabet number =
   <span data-count="1784">i</span>f number &lt; basis
-  then <span data-count="146">L</span>ist.nth alphabet number
-  else <span data-count="1638">e</span>nc_loop "" ~basis ~alphabet number
+  then <span data-count="47">L</span>ist.nth alphabet number
+  else <span data-count="1737">e</span>nc_loop "" ~basis ~alphabet number
 
 
 let base32_to_string ?(size = <span data-count="85">1</span>0) base32 =

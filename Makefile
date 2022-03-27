@@ -4,11 +4,12 @@ all: build
 clear: clean
 
 build:
+	@ dune build @check
 	@ dune build
 
 .PHONY: dev-deps
 dev-deps:
-	@ opam install ocamlformat odoc merlin utop ocp-indent --yes
+	@ opam install odoc merlin utop ocp-indent --yes
 
 .PHONY: deps
 deps:
@@ -92,19 +93,11 @@ coverage: clean
 	@ mkdir -p docs/
 	@ rm -rf docs/apicov/
 	@ mkdir -p docs/apicov/
-	@ BISECT_ENABLE=yes make build
-	@ BISECT_ENABLE=yes make test
-	@ bisect-ppx-report \
-		-title twostep \
-		-I _build/default/ \
-		-tab-size 2 \
-		-html coverage/ \
-		`find . -name 'bisect*.out'`
-	@ bisect-ppx-report \
-		-I _build/default/ \
-		-text - \
-		`find . -name 'bisect*.out'`
-	@ mv ./coverage/* ./docs/apicov/
+	@ find . -name '*.coverage' | xargs rm -f
+	@ dune runtest --instrument-with bisect_ppx --force
+	@ bisect-ppx-report html --title twostep
+	@ mv ./_coverage/* ./docs/apicov/
+	@ bisect-ppx-report summary
 
 report: coverage
 	@ bisect-ppx-report send-to Coveralls

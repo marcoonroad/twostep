@@ -376,7 +376,7 @@ module TOTP : ITOTP = struct
 
   let code
       ?(window = <span data-count="18">3</span>0) ?(drift = <span data-count="11">0</span>) ?(digits = <span data-count="14">6</span>) ?(hash = <span data-count="17">"</span>SHA-1") ~secret () =
-    <span data-count="42">a</span>ssert (digits = <span data-count="40">6</span> || digits = <span data-count="2">8</span>) ;
+    <span data-count="42">a</span>ssert <span data-count="42">(</span>digits = <span data-count="40">6</span> || digits = <span data-count="2">8</span>) ;
     let decoded = Base32.base32_to_string secret in
     <span data-count="41">l</span>et counter = Time.counter ~timestep:window ~drift () in
     <span data-count="41">l</span>et image = Hmac.hmac ~hash ~secret:decoded counter in
@@ -429,7 +429,7 @@ module HOTP : IHOTP = struct
 
 
   let codes ?(digits = <span data-count="3">6</span>) ?(hash = <span data-count="3">"</span>SHA-1") ?(amount = <span data-count="2">1</span>) ~counter ~secret () =
-    <span data-count="17">a</span>ssert (amount &gt;= 1) ;
+    <span data-count="17">a</span>ssert <span data-count="17">(</span>amount &gt;= 1) ;
     let step index = <span data-count="43">c</span>ode ~digits ~hash ~counter:(counter + index) ~secret () in
     Base.List.init amount ~f:step
 
@@ -442,8 +442,8 @@ module HOTP : IHOTP = struct
       ~secret
       ~codes:numbers
       () =
-    <span data-count="4">a</span>ssert (ahead &gt;= 0) ;
-    assert (Base.List.lengt<span data-count="4">h</span> numbers &gt;= 1) ;
+    <span data-count="4">a</span>ssert <span data-count="4">(</span>ahead &gt;= 0) ;
+    assert <span data-count="4">(</span>Base.List.lengt<span data-count="4">h</span> numbers &gt;= 1) ;
     let amount = Base.List.length numbers in
     <span data-count="4">l</span>et step index =
       <span data-count="14">l</span>et valid =
