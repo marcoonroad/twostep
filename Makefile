@@ -8,7 +8,7 @@ build:
 
 .PHONY: dev-deps
 dev-deps:
-	@ opam install ocamlformat.0.15.1 odoc merlin utop ocp-indent --yes
+	@ opam install odoc merlin utop ocp-indent --yes
 
 .PHONY: deps
 deps:
@@ -43,7 +43,7 @@ clean: cleanup-files
 
 .PHONY: lint-format
 lint-format:
-	@ opam install ocamlformat.0.15.1 --yes
+	@ opam install ocamlformat --yes
 	@ dune build @fmt
 
 .PHONY: lint
@@ -53,7 +53,7 @@ lint:
 
 .PHONY: format
 format:
-	@ opam install ocamlformat.0.15.1 --yes
+	@ opam install ocamlformat --yes
 	@ dune build @fmt --auto-promote || echo "\nSource code rewritten by format.\n"
 
 quick-test: build
