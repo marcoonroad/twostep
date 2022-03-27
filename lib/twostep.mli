@@ -1,6 +1,6 @@
 (** HOTP and TOTP algorithms for 2-step verification (for OCaml).
     @author Marco Aurélio da Silva
-    @version 1.0.0
+    @version 1.0.1
 *)
 
 (**
