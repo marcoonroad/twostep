@@ -34,5 +34,5 @@ depends: [
   "dune" {>= "2.7.0"}
   "bisect_ppx" {dev & >= "2.6.0"}
   "alcotest" {with-test & >= "0.8.4"}
-  "ocamlformat" {with-test & >= "0.20.0"}
+  "ocamlformat" {with-test & >= "0.16.0"}
 ]
