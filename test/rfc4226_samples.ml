@@ -39,7 +39,7 @@ let _ =
           let secret = get_secret algorithm in
           let image = I.hmac ~hash:algorithm ~secret payload_counter in
           let code = I.truncate ~image ~digits:6 in
-          print_endline (padded_counter ^ " | " ^ code))) ;
+          print_endline (padded_counter ^ " | " ^ code) ) ) ;
   print_endline "----------" ;
   print_endline
     ( "? | "

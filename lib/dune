@@ -2,7 +2,7 @@
  (name twostep)
  (public_name twostep)
  (synopsis "HOTP and TOTP algorithms for 2-step verification (for OCaml)")
- (preprocess
-  (pps bisect_ppx))
+ (instrumentation
+  (backend bisect_ppx))
  (libraries base hex mirage-crypto mirage-crypto-pk mirage-crypto-rng
    mirage-crypto-rng.unix bisect_ppx))
