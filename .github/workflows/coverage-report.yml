@@ -24,13 +24,10 @@ jobs:
       - run: opam pin add twostep.dev . --no-action
       - run: opam depext twostep --yes --with-test
       - run: opam install . --deps-only --with-doc --with-test
-      - run: opam exec -- dune build
-        env:
-          BISECT_ENABLE: yes
-      - run: opam exec -- dune runtest
-        env:
-          BISECT_ENABLE: yes
-      - run: opam exec -- bisect-ppx-report -I _build/default/ -text - `find . -name 'bisect*.out'`
+      - run: find . -name '*.coverage' | xargs rm -f
+      - run: opam exec -- dune runtest --instrument-with bisect_ppx --force
+      - run: opam exec -- bisect-ppx-report html --title twostep
+      - run: opam exec -- bisect-ppx-report summary
       - run: opam exec -- bisect-ppx-report send-to Coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
