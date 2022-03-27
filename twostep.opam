@@ -32,7 +32,7 @@ depends: [
   "mirage-crypto-rng" {>= "0.6.1"}
   "mirage-crypto-pk" {>= "0.6.1"}
   "dune" {>= "2.7.0"}
-  "bisect_ppx" {dev & >= "2.5.0"}
+  "bisect_ppx" {dev & >= "2.6.0"}
   "alcotest" {with-test & >= "0.8.4"}
   "ocamlformat" {with-test & >= "0.15.0"}
 ]
