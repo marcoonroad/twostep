@@ -4,11 +4,12 @@ all: build
 clear: clean
 
 build:
+	@ dune build @check
 	@ dune build
 
 .PHONY: dev-deps
 dev-deps:
-	@ opam install odoc merlin utop ocp-indent --yes
+	@ opam install merlin utop ocp-indent --yes
 
 .PHONY: deps
 deps:
@@ -41,20 +42,9 @@ cleanup-files:
 clean: cleanup-files
 	@ dune clean
 
-.PHONY: lint-format
-lint-format:
-	@ opam install ocamlformat --yes
-	@ dune build @fmt
-
 .PHONY: lint
 lint:
 	@ opam lint
-	@ make lint-format
-
-.PHONY: format
-format:
-	@ opam install ocamlformat --yes
-	@ dune build @fmt --auto-promote || echo "\nSource code rewritten by format.\n"
 
 quick-test: build
 	@ ALCOTEST_QUICK_TESTS=1 dune runtest
@@ -62,34 +52,9 @@ quick-test: build
 test: build
 	@ dune runtest --no-buffer -f -j 1
 
-.PHONY: docs-index
-docs-index:
-	@ cp README.md docs/index.md
-
-.PHONY: docs
-docs: build
-	@ mkdir -p docs/
-	@ rm -rf docs/apiref/
-	@ mkdir -p docs/apiref/
-	@ dune build @doc
-	@ make docs-index
-	@ mv ./_build/default/_doc/_html/* ./docs/apiref/
-
-.PHONY: serve-docs
-serve-docs: docs
-	@ cd docs && bundle exec jekyll serve && cd .. || cd ..
-
 install: build
 	@ dune install
 
 .PHONY: uninstall
 uninstall:
 	@ dune uninstall
-
-.PHONY: local-site-setup
-local-site-setup:
-	@ cd docs && bundle install --path vendor/bundle && cd ..
-
-.PHONY: local-site-start
-local-site-start:
-	@ cd docs && bundle exec jekyll serve && cd ..

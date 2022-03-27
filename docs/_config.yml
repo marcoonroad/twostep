@@ -1,8 +1,0 @@
-title: twostep
-description: "HOTP and TOTP algorithms for 2-step verification (for OCaml)."
-repository: marcoonroad/twostep
-theme: jekyll-theme-hacker
-plugins:
-  - jekyll-avatar
-  - jemoji
-  - jekyll-mentions
