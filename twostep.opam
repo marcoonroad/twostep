@@ -20,7 +20,6 @@ build: [
 ]
 
 run-test: [
-  ["dune" "build" "@fmt" "-p" name "-j" jobs]
   ["dune" "runtest" "-p" name "-j" jobs]
 ]
 
@@ -34,5 +33,4 @@ depends: [
   "dune" {>= "2.7.0"}
   "bisect_ppx" {dev & >= "2.6.0"}
   "alcotest" {with-test & >= "0.8.4"}
-  "ocamlformat" {with-test & >= "0.16.0"}
 ]

@@ -4,11 +4,12 @@ all: build
 clear: clean
 
 build:
+	@ dune build @check
 	@ dune build
 
 .PHONY: dev-deps
 dev-deps:
-	@ opam install ocamlformat odoc merlin utop ocp-indent --yes
+	@ opam install odoc merlin utop ocp-indent --yes
 
 .PHONY: deps
 deps:
