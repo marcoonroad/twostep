@@ -10,4 +10,4 @@ let generate ~bytes () =
       ^ ") for secret, it must be at least 10 and divisible by 5!" )
 
 
-let _ = Mirage_crypto_rng_unix.initialize ()
+let _ = Mirage_crypto_rng_unix.initialize (module Mirage_crypto_rng.Fortuna)

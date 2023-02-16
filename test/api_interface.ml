@@ -200,5 +200,5 @@ let suite =
 
 
 let () =
-  Mirage_crypto_rng_unix.initialize () ;
+  Mirage_crypto_rng_unix.initialize (module Mirage_crypto_rng.Fortuna) ;
   run "Twostep tests" [ ("test suite", suite) ]

@@ -30,7 +30,7 @@ depends: [
   "base" {>= "v0.9.3"}
   "hex" {>= "1.2.0"}
   "mirage-crypto" {>= "0.6.1"}
-  "mirage-crypto-rng" {>= "0.6.1"}
+  "mirage-crypto-rng" {>= "0.11.0"}
   "mirage-crypto-pk" {>= "0.6.1"}
   "dune" {>= "2.7.0"}
   "bisect_ppx" {dev & >= "2.6.0"}
